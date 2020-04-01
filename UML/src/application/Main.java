@@ -1,0 +1,45 @@
+package application;
+
+import javafx.application.Application;
+import javafx.stage.Stage;
+import model.UMLClass;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
+import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+
+
+public class Main extends Application {
+	@Override
+	public void start(Stage primaryStage) {
+		try {			
+			VBox root = (VBox)FXMLLoader.load(getClass().getResource("/View/Main.fxml"));
+			
+			//test
+						
+			new SampleController();			
+			
+			//end test
+			
+			
+			
+			Scene scene = new Scene(root,400,400);
+			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(scene);
+			primaryStage.show();
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+}
