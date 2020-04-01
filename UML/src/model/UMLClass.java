@@ -13,9 +13,9 @@ import javafx.scene.input.MouseEvent;
 
 public class UMLClass extends DraggableVBox {	
 	
-	private int propertyIndex = 2;
-	private int methodIndex = 4;	
 	private SimpleStringProperty classname;	  
+	
+	private VBox propertyBox = new VBox();
 	
 	
 	public UMLClass(String classname) {		
@@ -26,14 +26,17 @@ public class UMLClass extends DraggableVBox {
 		
 		getChildren().add(classNameLabel);		
 		getChildren().add(new Separator());
+		getChildren().add(propertyBox);
 		getChildren().add(new Separator());
 		
 		getStyleClass().add("umlClass");		
 	}
 	
-	public void addProperty(String visiblity, String datatype, String name) {
-		getChildren().add(propertyIndex, new Label(
-			String.format("%s %s: %s", visiblity, name, datatype)));
-		propertyIndex++;		
+	public void addProperty(Property property) {
+		propertyBox.getChildren().add(property);		
 	}	
+	
+	public void replaceProperty(int pid, Property property) {
+		propertyBox.getChildren().set(pid, property);
+	}
 }

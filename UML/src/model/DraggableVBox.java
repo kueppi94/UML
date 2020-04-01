@@ -4,7 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
-public class DraggableVBox extends javafx.scene.layout.VBox {
+public abstract class DraggableVBox extends javafx.scene.layout.VBox {
 
 	private double orgSceneX, orgSceneY;
 	private double orgTranslateX, orgTranslateY;

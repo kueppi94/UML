@@ -19,15 +19,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {			
-			VBox root = (VBox)FXMLLoader.load(getClass().getResource("/View/Main.fxml"));
-			
-			//test
-						
-			new SampleController();			
-			
-			//end test
-			
-			
+			VBox root = (VBox)FXMLLoader.load(getClass().getResource("/View/Main.fxml"));			
 			
 			Scene scene = new Scene(root,400,400);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
