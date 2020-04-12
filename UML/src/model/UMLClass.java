@@ -13,18 +13,18 @@ import javafx.scene.input.MouseEvent;
 
 public class UMLClass extends DraggableVBox {	
 	
-	private SimpleStringProperty classname;	  
+	private Label className; 
 	
 	private VBox propertyBox = new VBox();
 	
+	private boolean isAbstract;
+	
 	
 	public UMLClass(String classname) {		
-		Label classNameLabel = new Label(classname);
-		classNameLabel.getStyleClass().add("umlClassName");
-		this.classname = new SimpleStringProperty(classname);
-		classNameLabel.textProperty().bindBidirectional(this.classname);
+		className = new Label(classname);
+		className.getStyleClass().add("umlClassName");			
 		
-		getChildren().add(classNameLabel);		
+		getChildren().add(className);		
 		getChildren().add(new Separator());
 		getChildren().add(propertyBox);
 		getChildren().add(new Separator());
@@ -38,5 +38,21 @@ public class UMLClass extends DraggableVBox {
 	
 	public void replaceProperty(int pid, Property property) {
 		propertyBox.getChildren().set(pid, property);
+	}
+	
+	public void setClassName(String className) {
+		this.className.setText(className);
+	}
+	
+	public void setIsAbstract(boolean isAbstract) {
+		this.isAbstract = isAbstract;
+		
+		if(isAbstract) {
+			
+		}
+	}
+	
+	public boolean getIsAbstract() {
+		return isAbstract;
 	}
 }
