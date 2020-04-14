@@ -9,6 +9,9 @@ import javafx.beans.property.Property;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.beans.value.ObservableNumberValue;
 import javafx.css.StyleClass;
+import javafx.event.EventHandler;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
 public class ConnectionPoint extends javafx.scene.shape.Circle {
@@ -18,8 +21,13 @@ public class ConnectionPoint extends javafx.scene.shape.Circle {
 	public static final String LEFT = "left";
 	public static final String RIGHT = "right";
 	
+	private VBox parent;
+	private String position;
+	
 	public ConnectionPoint(VBox parent, String position) {
 		setRadius(10.0);
+		this.parent = parent;
+		this.position = position;
 		
 		//Koordinate des linken-oberen Eckpunkts
 		DoubleProperty x = parent.translateXProperty();
@@ -58,9 +66,26 @@ public class ConnectionPoint extends javafx.scene.shape.Circle {
 		centerXProperty().bind(ConnectionPointX);
 		centerYProperty().bind(ConnectionPointY);
 		
+		setOnMouseClicked(connectionPointOnMousePressedEventHandler);
+		setOnMouseDragged(connectionPointOnMouseDraggedEventHandler);
 		
 		//getStyleClass().add("test");
 		//setCenterY(100);		
-	}
+	}	
 	
+	EventHandler<MouseEvent> connectionPointOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent t) {
+			System.out.println("Pressed");			
+		}
+	};
+	
+	EventHandler<MouseEvent> connectionPointOnMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent t) {
+			System.out.println("Dragged");
+		}
+	};
 }

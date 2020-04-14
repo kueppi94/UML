@@ -4,7 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
-public abstract class DraggableVBox extends javafx.scene.layout.VBox {
+public class DraggableVBox extends javafx.scene.layout.VBox {
 
 	private double orgSceneX, orgSceneY;
 	private double orgTranslateX, orgTranslateY;
@@ -35,21 +35,21 @@ public abstract class DraggableVBox extends javafx.scene.layout.VBox {
 			double offsetX = t.getSceneX() - orgSceneX;
 			double offsetY = t.getSceneY() - orgSceneY;
 			double newTranslateX = orgTranslateX + offsetX;
-			double newTranslateY = orgTranslateY + offsetY;
+			double newTranslateY = orgTranslateY + offsetY;			
 
-			Node parent = getParent();
-
+			Node pane = getParent().getParent();			
+			
 			// left border collision
-			if (newTranslateX > parent.getTranslateX())
+			if (newTranslateX > pane.getTranslateX())
 				((Node) (t.getSource())).setTranslateX(newTranslateX);
 			else
-				((Node) (t.getSource())).setTranslateX(parent.getTranslateX());
+				((Node) (t.getSource())).setTranslateX(pane.getTranslateX());
 
 			// top border collision
-			if (newTranslateY > parent.getTranslateY())
+			if (newTranslateY > pane.getTranslateY())
 				((Node) (t.getSource())).setTranslateY(newTranslateY);
 			else
-				((Node) (t.getSource())).setTranslateY(parent.getTranslateY());
+				((Node) (t.getSource())).setTranslateY(pane.getTranslateY());
 		}
 	};
 }

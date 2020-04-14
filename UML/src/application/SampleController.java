@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.ConnectionLine;
 import model.ConnectionPoint;
 import model.Property;
 import model.UMLClass;
@@ -34,17 +35,24 @@ public class SampleController {
 	
 	public void initialize() {	    
 		//testing
-		 UMLClass uml = new UMLClass("Testklasse");	
+		 UMLClass uml = new UMLClass("Testklasse");		
+		 UMLClass uml2 = new UMLClass("Testklasse2");
+		 
+		 Content.getChildren().add(uml);
+		 Content.getChildren().add(uml2);		 
+		 
+		 System.out.println(Content.getChildren());
+		 
 		 //UMLClass uml2 = new UMLClass("Testklasse2");
 		 
 		 //TEsting
-		 ConnectionPoint pr = new ConnectionPoint(uml, ConnectionPoint.RIGHT);
-		 ConnectionPoint pl = new ConnectionPoint(uml, ConnectionPoint.LEFT);
-		 ConnectionPoint pt = new ConnectionPoint(uml, ConnectionPoint.TOP);
-		 ConnectionPoint pb = new ConnectionPoint(uml, ConnectionPoint.BOTTOM);
-		 Content.getChildren().addAll(pr, pl, pt, pb);
+		 //ConnectionPoint pr = new ConnectionPoint(uml, ConnectionPoint.RIGHT);
+		 //ConnectionPoint pl = new ConnectionPoint(uml, ConnectionPoint.LEFT);
+		 //ConnectionPoint pt = new ConnectionPoint(uml, ConnectionPoint.TOP);
+		 //ConnectionPoint pb = new ConnectionPoint(uml, ConnectionPoint.BOTTOM);
+		 //Content.getChildren().addAll(pr, pl, pt, pb);
 		 
-		 Content.getChildren().add(uml);		 
+		 
 		 //End testing
 		 
 		 
@@ -95,9 +103,19 @@ public class SampleController {
 	 }	 
 	
 	@FXML
-	public void test() {
-		((UMLClass)Content.getChildren().get(4)).addProperty(new Property("+", "zaehler", "int"));
-		((UMLClass)Content.getChildren().get(4)).replaceProperty(0, new Property("-", "test", "doublekkkkkkkkkkkkkkkkkkkkkkkkkkkk"));	
-		((UMLClass)Content.getChildren().get(4)).setClassName("abc");	
+	public void test() {	
+		UMLClass uml = ((UMLClass)Content.getChildren().get(0));
+		UMLClass uml2 = ((UMLClass)Content.getChildren().get(1));
+		
+		((UMLClass)Content.getChildren().get(0)).addProperty(new Property("+", "zaehler", "int"));
+		((UMLClass)Content.getChildren().get(0)).replaceProperty(0, new Property("-", "test", "doublekkkkkkkkkkkkkkkkkkkkkkkkkkkk"));	
+		((UMLClass)Content.getChildren().get(0)).setClassName("abc");	
+		
+		
+		ConnectionLine test1 = new ConnectionLine(uml.getRightConnection(), uml2.getLeftConnection());
+		 
+		 Content.getChildren().add(test1);	
+		 
+		 System.out.println(Content.getChildren());
 	}
 }
