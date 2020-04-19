@@ -4,6 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -15,8 +16,7 @@ import javafx.scene.input.MouseEvent;
 
 public class UMLClass extends javafx.scene.Group {	
 	
-	//beinhaltet sämtliche Informationen (Klassenname, Eigenschaften & Methoden)	
-	private DraggableVBox umlClassBox = new DraggableVBox();	
+	private VBox umlClassBox = new VBox();
 	
 	private Label className;	
 	
@@ -32,7 +32,7 @@ public class UMLClass extends javafx.scene.Group {
 	private ConnectionPoint rightConnection;	
 	
 	
-	public UMLClass(String classname) {		
+	public UMLClass(String classname) {			
 		className = new Label(classname);
 		className.getStyleClass().add("umlClassName");			
 		
@@ -46,14 +46,10 @@ public class UMLClass extends javafx.scene.Group {
 		leftConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.LEFT);
 		rightConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.RIGHT);		
 		
-		umlClassBox.getStyleClass().add("umlClass");	
+		umlClassBox.getStyleClass().add("umlClass");		
 		
-		getChildren().addAll(umlClassBox, topConnection, botConnection, leftConnection, rightConnection);
+		getChildren().addAll((Group)DraggableNodeFactory.create(umlClassBox), topConnection, botConnection, leftConnection, rightConnection);
 		
-		//parent.getChildren().addAll(this, topConnection, botConnection, leftConnection, rightConnection);
-				
-		
-		//this.getParent()
 	}	
 	
 	public void addProperty(Property property) {
@@ -94,5 +90,5 @@ public class UMLClass extends javafx.scene.Group {
 
 	public ConnectionPoint getRightConnection() {
 		return rightConnection;
-	}
+	}	
 }

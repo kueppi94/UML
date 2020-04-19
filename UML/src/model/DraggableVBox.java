@@ -9,7 +9,7 @@ public class DraggableVBox extends javafx.scene.layout.VBox {
 	private double orgSceneX, orgSceneY;
 	private double orgTranslateX, orgTranslateY;
 	
-	public DraggableVBox() {
+	public DraggableVBox() {		
 		setOnMousePressed(vBoxOnMousePressedEventHandler);
 		setOnMouseDragged(vBoxOnMouseDraggedEventHandler);
 	}

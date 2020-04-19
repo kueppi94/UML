@@ -14,7 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-public class ConnectionPoint extends javafx.scene.shape.Circle {
+public class ConnectionPoint extends javafx.scene.shape.Rectangle {
 
 	public static final String TOP = "top";
 	public static final String BOTTOM = "bottom";
@@ -22,13 +22,60 @@ public class ConnectionPoint extends javafx.scene.shape.Circle {
 	public static final String RIGHT = "right";
 	
 	private VBox parent;
-	private String position;
+	private String position;	
 	
 	public ConnectionPoint(VBox parent, String position) {
-		setRadius(10.0);
+		//setRadius(10.0);	
+		
+		
+		
 		this.parent = parent;
 		this.position = position;
 		
+		//Größe bestimmen
+		if(position.equals(TOP)|| position.equals(BOTTOM)) {
+			widthProperty().bind(parent.widthProperty());
+			setHeight(10);
+		}
+		else {
+			setWidth(10);
+			heightProperty().bind(parent.heightProperty());
+		}
+		
+		
+		//Koordinate des linken-oberen Eckpunkts (VBox)
+		DoubleProperty x = parent.translateXProperty();
+		DoubleProperty y = parent.translateYProperty();				
+		
+		//Koordinate des linken-oberen Eckpunkts des "Verbindungsrahmens"
+		ObservableNumberValue ConnectionPointX;
+		ObservableNumberValue ConnectionPointY;
+		
+		switch(position) {
+		case TOP:
+			ConnectionPointX = x;
+			ConnectionPointY = y.subtract(heightProperty());
+			break;
+		case BOTTOM:
+			ConnectionPointX = x;
+			ConnectionPointY = y.add(parent.heightProperty());
+			break;
+		case LEFT:
+			ConnectionPointX = x.subtract(widthProperty());
+			ConnectionPointY = y;
+			break;
+		case RIGHT:
+			ConnectionPointX = x.add(parent.widthProperty());
+			ConnectionPointY = y;
+			break;
+		default:
+			throw new UnsupportedOperationException();				
+		}
+		
+		translateXProperty().bind(ConnectionPointX);
+		translateYProperty().bind(ConnectionPointY);
+		
+		/*
 		//Koordinate des linken-oberen Eckpunkts
 		DoubleProperty x = parent.translateXProperty();
 		DoubleProperty y = parent.translateYProperty();
@@ -61,15 +108,16 @@ public class ConnectionPoint extends javafx.scene.shape.Circle {
 			throw new UnsupportedOperationException();			
 		}		
 		
-		
+		*/
 		//Bindet den ConnectionPoint an die vorgesehene Stelle
-		centerXProperty().bind(ConnectionPointX);
-		centerYProperty().bind(ConnectionPointY);
+		//centerXProperty().bind(ConnectionPointX);
+		//centerYProperty().bind(ConnectionPointY);
+		
 		
 		setOnMouseClicked(connectionPointOnMousePressedEventHandler);
 		setOnMouseDragged(connectionPointOnMouseDraggedEventHandler);
 		
-		//getStyleClass().add("test");
+		getStyleClass().add("test");
 		//setCenterY(100);		
 	}	
 	
@@ -88,4 +136,8 @@ public class ConnectionPoint extends javafx.scene.shape.Circle {
 			System.out.println("Dragged");
 		}
 	};
+
+	public String getPosition() {
+		return position;
+	}
 }

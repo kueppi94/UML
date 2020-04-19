@@ -1,3 +1,5 @@
+
+
 package application;
 
 import javafx.fxml.FXML;
@@ -7,10 +9,17 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.ConnectionLine;
 import model.ConnectionPoint;
+import model.DataType;
+import model.DraggableNodeFactory;
 import model.Property;
 import model.UMLClass;
+import model.Visibility;
 
 import java.awt.MouseInfo;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Properties;
+
 
 import javafx.application.Application;
 import javafx.event.Event;
@@ -35,7 +44,7 @@ public class SampleController {
 	
 	public void initialize() {	    
 		//testing
-		 UMLClass uml = new UMLClass("Testklasse");		
+		 UMLClass uml = new UMLClass("Testklasse1");
 		 UMLClass uml2 = new UMLClass("Testklasse2");
 		 
 		 Content.getChildren().add(uml);
@@ -93,11 +102,16 @@ public class SampleController {
 		 
 		 
 		 Content.getChildren().add(path);
-		 */		 
+		 */				 
 		 
 		 
-		 Property test = new Property("+", "zaehler", "int");
-		 		 
+		 
+		 Property test = new Property(Visibility.NO_MODIFIER, "_z", DataType.BOOLEAN);
+		 	
+		
+		 
+		 
+		 
 		 uml.addProperty(test);	
 		 //end testing		 
 	 }	 
@@ -107,12 +121,12 @@ public class SampleController {
 		UMLClass uml = ((UMLClass)Content.getChildren().get(0));
 		UMLClass uml2 = ((UMLClass)Content.getChildren().get(1));
 		
-		((UMLClass)Content.getChildren().get(0)).addProperty(new Property("+", "zaehler", "int"));
-		((UMLClass)Content.getChildren().get(0)).replaceProperty(0, new Property("-", "test", "doublekkkkkkkkkkkkkkkkkkkkkkkkkkkk"));	
+		((UMLClass)Content.getChildren().get(0)).addProperty(new Property(Visibility.PUBLIC, "z2", DataType.STRING));
+		//((UMLClass)Content.getChildren().get(0)).replaceProperty(0, new Property("-", "String", "doublekkkkkkkkkkkkkkkkkkkkkkkkkkkk"));	
 		((UMLClass)Content.getChildren().get(0)).setClassName("abc");	
 		
 		
-		ConnectionLine test1 = new ConnectionLine(uml.getRightConnection(), uml2.getLeftConnection());
+		ConnectionLine test1 = new ConnectionLine(uml.getTopConnection(), uml2.getBotConnection());
 		 
 		 Content.getChildren().add(test1);	
 		 

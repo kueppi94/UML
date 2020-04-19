@@ -1,16 +1,39 @@
 package model;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.scene.shape.HLineTo;
 import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.VLineTo;
 
 public class ConnectionLine extends javafx.scene.shape.Path {
 	private ConnectionPoint start;
 	private ConnectionPoint end;
 	
-	public ConnectionLine(ConnectionPoint start, ConnectionPoint end) {
-		MoveTo startpoint = new MoveTo(start.getCenterX(), start.getCenterY());
-		LineTo endpoint = new LineTo(end.getCenterX(), end.getCenterY());
+	private MoveTo startpoint = new MoveTo();
+	private HLineTo hLine = new HLineTo();
+	private VLineTo vLine = new VLineTo();
 	
-		getElements().addAll(startpoint, endpoint);
-	}
+	public ConnectionLine(ConnectionPoint start, ConnectionPoint end) {
+		this.start = start;
+		this.end = end;			
+		
+		startpoint.xProperty().bind(this.start.translateXProperty());
+		startpoint.yProperty().bind(this.start.translateYProperty());
+		
+		
+		hLine.xProperty().bind(this.end.translateXProperty());
+		
+		vLine.yProperty().bind(this.end.translateYProperty());
+		
+		if(start.getPosition().equals(ConnectionPoint.TOP) || start.getPosition().equals(ConnectionPoint.BOTTOM)) {
+			getElements().addAll(startpoint, vLine, hLine);	
+		}
+		else {
+			getElements().addAll(startpoint, hLine, vLine);	
+		}
+		
+		
+		getStyleClass().add("connectionLine");
+		}	
 }

@@ -1,5 +1,7 @@
 package model;
 
+import javax.lang.model.SourceVersion;
+
 import javafx.scene.control.Label;
 
 public class Property extends javafx.scene.layout.HBox {
@@ -7,25 +9,29 @@ public class Property extends javafx.scene.layout.HBox {
 	private Label visiblity = new Label();
 	private Label name = new Label();
 	private Label dataType = new Label();
-
-	public Property(String visiblity, String name, String dataType) {
+	
+	public Property(Visibility visiblity, String name, DataType dataType) {
 
 		setVisiblity(visiblity);;
 		setName(name);
-		setReturnedType(dataType);
+		setDataType(dataType);
 
 		getChildren().addAll(this.visiblity, this.name, this.dataType);
 	}
 
-	public void setVisiblity(String visiblity) {
-		this.visiblity.setText(visiblity + " ");
+	public void setVisiblity(Visibility visiblity) {
+		this.visiblity.setText(visiblity.toUML().getValue() + " ");
 	}
 
 	public void setName(String name) {
-		this.name.setText(name + ": ");
+		
+		if(SourceVersion.isName(name))
+			this.name.setText(name + ": ");
+		else
+			throw new IllegalArgumentException("Name der Eigenschaft ist ungültig!");		
 	}
 
-	public void setReturnedType(String returnedType) {
-		this.dataType.setText(returnedType);
+	public void setDataType(DataType dataType) {
+		this.dataType.setText(dataType.getName());
 	}
 }
