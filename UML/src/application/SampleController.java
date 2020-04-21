@@ -106,10 +106,7 @@ public class SampleController {
 		 
 		 
 		 
-		 Property test = new Property(Visibility.NO_MODIFIER, "_z", DataType.BOOLEAN);
-		 	
-		
-		 
+		 Property test = new Property(Visibility.NO_MODIFIER, "_z", DataType.BOOLEAN);		 
 		 
 		 
 		 uml.addProperty(test);	
@@ -121,7 +118,11 @@ public class SampleController {
 		UMLClass uml = ((UMLClass)Content.getChildren().get(0));
 		UMLClass uml2 = ((UMLClass)Content.getChildren().get(1));
 		
-		((UMLClass)Content.getChildren().get(0)).addProperty(new Property(Visibility.PUBLIC, "z2", DataType.STRING));
+		((UMLClass)Content.getChildren().get(0)).addProperty(new Property(Visibility.PUBLIC, "z2kkkkkkkkkkkkkkkkkkkkkkkkkkkkkk", DataType.STRING));
+		if(((UMLClass)Content.getChildren().get(0)).isAbstract())		
+			((UMLClass)Content.getChildren().get(0)).setAbstract(false);
+		else
+			((UMLClass)Content.getChildren().get(0)).setAbstract(true);
 		//((UMLClass)Content.getChildren().get(0)).replaceProperty(0, new Property("-", "String", "doublekkkkkkkkkkkkkkkkkkkkkkkkkkkk"));	
 		((UMLClass)Content.getChildren().get(0)).setClassName("abc");	
 		

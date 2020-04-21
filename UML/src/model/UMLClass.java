@@ -1,14 +1,27 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
@@ -16,65 +29,74 @@ import javafx.scene.input.MouseEvent;
 
 public class UMLClass extends javafx.scene.Group {	
 	
-	private VBox umlClassBox = new VBox();
+	private StringProperty classNameProperty = new SimpleStringProperty();		
 	
-	private Label className;	
+	private BooleanProperty isAbstractProperty = new SimpleBooleanProperty();
+	private static final int ABSTRACT_ID = 1;	
+	private static final String ABSTRACT_TEXT = "{abstract}";
 	
-	//speichert alle Eigenschaften der Klasse
-	private VBox propertyBox = new VBox();
+	private SimpleListProperty<Property> properties = new SimpleListProperty<Property>(FXCollections.observableArrayList());
 	
-	private boolean isAbstract;
+	private SimpleListProperty<Property> methods = new SimpleListProperty<Property>(FXCollections.observableArrayList());
+	
 	
 	//Verbindungspunkte für Beziehungen zwischen Klassen, Interfaces usw.
 	private ConnectionPoint topConnection;
 	private ConnectionPoint botConnection;
 	private ConnectionPoint leftConnection;
-	private ConnectionPoint rightConnection;	
+	private ConnectionPoint rightConnection;		
 	
 	
-	public UMLClass(String classname) {			
-		className = new Label(classname);
-		className.getStyleClass().add("umlClassName");			
+	public UMLClass(String className) {	
 		
-		umlClassBox.getChildren().add(className);		
-		umlClassBox.getChildren().add(new Separator());
-		umlClassBox.getChildren().add(propertyBox);
-		umlClassBox.getChildren().add(new Separator());
+		Node uml = createUmlNode(className);		
 		
-		topConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.TOP);
-		botConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.BOTTOM);
-		leftConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.LEFT);
-		rightConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.RIGHT);		
-		
-		umlClassBox.getStyleClass().add("umlClass");		
-		
-		getChildren().addAll((Group)DraggableNodeFactory.create(umlClassBox), topConnection, botConnection, leftConnection, rightConnection);
+		getChildren().addAll(uml, topConnection, botConnection, leftConnection, rightConnection);
 		
 	}	
 	
-	public void addProperty(Property property) {
-		propertyBox.getChildren().add(property);		
-	}	
-	
-	public void replaceProperty(int pid, Property property) {
-		propertyBox.getChildren().set(pid, property);
+	public StringProperty classNameProperty() {
+		return classNameProperty;
 	}
 	
 	public void setClassName(String className) {
-		this.className.setText(className);
+		classNameProperty.set(className);
 	}
 	
-	public void setIsAbstract(boolean isAbstract) {
-		this.isAbstract = isAbstract;
+	public BooleanProperty abstractProperty() {
+		return isAbstractProperty;
+	}
+	
+	public void setAbstract(boolean isAbstract) {
+		isAbstractProperty.set(isAbstract);
+	}
+	
+	public boolean isAbstract() {
+		return isAbstractProperty.get();
+	}
+	
+	public void addProperty(Property property) {		
+		properties.add(property);	
 		
-		if(isAbstract) {
-			
-		}
-	}
+	}	
 	
-	public boolean getIsAbstract() {
-		return isAbstract;
-	}
+	public void setProperty(int pid, Property property) {		
+		properties.set(pid, property);
+	}	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		
 
 	public ConnectionPoint getTopConnection() {
 		return topConnection;
@@ -90,5 +112,47 @@ public class UMLClass extends javafx.scene.Group {
 
 	public ConnectionPoint getRightConnection() {
 		return rightConnection;
+	}		
+
+	private Node createUmlNode(String className) {		
+		VBox umlClassBox = new VBox();		
+		umlClassBox.setAlignment(Pos.CENTER);
+		
+		Label classNameLabel = new Label(className);
+		classNameLabel.getStyleClass().add("umlClassName");
+		
+		VBox propertyBox = new VBox();		
+		
+		umlClassBox.getChildren().add(classNameLabel);		
+		umlClassBox.getChildren().add(new Separator());
+		umlClassBox.getChildren().add(propertyBox);
+		umlClassBox.getChildren().add(new Separator());
+		
+		topConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.TOP);
+		botConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.BOTTOM);
+		leftConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.LEFT);
+		rightConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.RIGHT);	
+		
+		setClassName(className);		
+		
+		//Set Style
+		umlClassBox.getStyleClass().add("umlClass");		
+		
+		//Define Bindings
+		classNameLabel.textProperty().bind(classNameProperty);		
+		
+		isAbstractProperty.addListener(new ChangeListener<Object>(){
+	        @Override public void changed(ObservableValue<?> o,Object oldVal, Object newVal){	        	
+	        	if((Boolean)newVal)
+	        		umlClassBox.getChildren().add(ABSTRACT_ID, new Label(ABSTRACT_TEXT));
+	             else
+	            	umlClassBox.getChildren().remove(ABSTRACT_ID);	  	 
+	        }
+	      });
+		
+		Bindings.bindContent(propertyBox.getChildren(), properties);		
+		
+		//Make Box draggable
+		return DraggableNodeFactory.create(umlClassBox);
 	}	
 }

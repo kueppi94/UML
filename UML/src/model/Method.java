@@ -20,7 +20,7 @@ public class Method extends javafx.scene.layout.HBox {
 		setParameters(parameters);		
 		
 		Label a = new Label();
-		a.textProperty().bind(visibility.toUML());
+		a.textProperty().bind(visibility.umlSignProperty());
 		
 		getChildren().add(a);
 	}
