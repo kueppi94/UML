@@ -1,7 +1,5 @@
 package model;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -44,14 +42,20 @@ public abstract class DraggableNodeFactory {
 	            public void handle(final MouseEvent mouseEvent) {	                
                     // shift node from its initial position by delta
                     // calculated from mouse cursor movement
-                    node.setTranslateX(
-                        dragContext.initialTranslateX
-                            + mouseEvent.getX()
-                            - dragContext.mouseAnchorX);
-                    node.setTranslateY(
-                        dragContext.initialTranslateY
-                            + mouseEvent.getY()
-                            - dragContext.mouseAnchorY);	                
+	            	double newTranslateX = dragContext.initialTranslateX + mouseEvent.getX() - dragContext.mouseAnchorX;
+	            	double newTranslateY = dragContext.initialTranslateY + mouseEvent.getY() - dragContext.mouseAnchorY;
+	            	
+	            	Node pane = ((Node) (mouseEvent.getSource())).getParent();
+	            	
+	            	if(newTranslateX > pane.getTranslateX())
+	            		node.setTranslateX(newTranslateX);
+	            	else
+	            		node.setTranslateX(pane.getTranslateX());
+	            	
+	            	if(newTranslateY > pane.getTranslateY())
+	            		node.setTranslateY(newTranslateY);
+	            	else
+	            		node.setTranslateY(pane.getTranslateY());
 	            }
 	        });
 	 
@@ -59,7 +63,7 @@ public abstract class DraggableNodeFactory {
 
 	}	
 	
-	private static final class DragContext {
+	private static final class DragContext {		
         public double mouseAnchorX;
         public double mouseAnchorY;
         public double initialTranslateX;

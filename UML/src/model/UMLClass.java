@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public class UMLClass extends javafx.scene.Group {	
+public class UMLClass extends javafx.scene.Group implements Styles {	
 	
 	private StringProperty classNameProperty = new SimpleStringProperty();		
 	
@@ -37,7 +37,7 @@ public class UMLClass extends javafx.scene.Group {
 	
 	private SimpleListProperty<Property> properties = new SimpleListProperty<Property>(FXCollections.observableArrayList());
 	
-	private SimpleListProperty<Property> methods = new SimpleListProperty<Property>(FXCollections.observableArrayList());
+	private SimpleListProperty<Method> methods = new SimpleListProperty<Method>(FXCollections.observableArrayList());
 	
 	
 	//Verbindungspunkte für Beziehungen zwischen Klassen, Interfaces usw.
@@ -45,7 +45,6 @@ public class UMLClass extends javafx.scene.Group {
 	private ConnectionPoint botConnection;
 	private ConnectionPoint leftConnection;
 	private ConnectionPoint rightConnection;		
-	
 	
 	public UMLClass(String className) {	
 		
@@ -84,6 +83,14 @@ public class UMLClass extends javafx.scene.Group {
 		properties.set(pid, property);
 	}	
 	
+	public void addMethod(Method method) {
+		methods.add(method);				
+	}
+	
+	public void setMethod(int mid, Method method) {
+		methods.set(mid, method);
+	}
+	
 	
 	
 	
@@ -119,14 +126,12 @@ public class UMLClass extends javafx.scene.Group {
 		umlClassBox.setAlignment(Pos.CENTER);
 		
 		Label classNameLabel = new Label(className);
-		classNameLabel.getStyleClass().add("umlClassName");
+		classNameLabel.getStyleClass().add(UML_CLASS_NAME);
 		
 		VBox propertyBox = new VBox();		
+		VBox methodBox = new VBox();
 		
-		umlClassBox.getChildren().add(classNameLabel);		
-		umlClassBox.getChildren().add(new Separator());
-		umlClassBox.getChildren().add(propertyBox);
-		umlClassBox.getChildren().add(new Separator());
+		umlClassBox.getChildren().addAll(classNameLabel, new Separator(), propertyBox, new Separator(), methodBox);			
 		
 		topConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.TOP);
 		botConnection = new ConnectionPoint(umlClassBox, ConnectionPoint.BOTTOM);
@@ -136,7 +141,7 @@ public class UMLClass extends javafx.scene.Group {
 		setClassName(className);		
 		
 		//Set Style
-		umlClassBox.getStyleClass().add("umlClass");		
+		umlClassBox.getStyleClass().add(UML_CLASS);		
 		
 		//Define Bindings
 		classNameLabel.textProperty().bind(classNameProperty);		
@@ -150,7 +155,8 @@ public class UMLClass extends javafx.scene.Group {
 	        }
 	      });
 		
-		Bindings.bindContent(propertyBox.getChildren(), properties);		
+		Bindings.bindContent(propertyBox.getChildren(), properties);	
+		Bindings.bindContent(methodBox.getChildren(), methods);
 		
 		//Make Box draggable
 		return DraggableNodeFactory.create(umlClassBox);

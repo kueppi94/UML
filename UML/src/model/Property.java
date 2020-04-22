@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 public class Property extends javafx.scene.layout.HBox {
 
 	private Visibility visibility;
-	private SimpleStringProperty name = new SimpleStringProperty();
+	private SimpleStringProperty nameProperty = new SimpleStringProperty();
 	private DataType dataType;
 	
 	public Property(Visibility visiblity, String name, DataType dataType) {
@@ -24,7 +24,7 @@ public class Property extends javafx.scene.layout.HBox {
 		setDataType(dataType);		
 		
 		visibilityLabel.textProperty().bind(Bindings.concat(this.visibility.umlSignProperty(), " "));		
-		nameLabel.textProperty().bind(Bindings.concat(this.name, ": "));		
+		nameLabel.textProperty().bind(Bindings.concat(this.nameProperty, ": "));		
 		dataTypeLabel.textProperty().bind(this.dataType.umlNameProperty());
 					
 
@@ -38,7 +38,7 @@ public class Property extends javafx.scene.layout.HBox {
 	public void setName(String name) {
 		
 		if(SourceVersion.isName(name))
-			this.name.set(name);
+			this.nameProperty.set(name);
 		else
 			throw new IllegalArgumentException("Name der Eigenschaft ist ungültig!");		
 	}

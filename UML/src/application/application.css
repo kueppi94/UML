@@ -13,6 +13,10 @@
     -fx-font-weight: bold;        
 }
 
+.italic {
+	-fx-font-style: italic;
+}
+
 .connectionLine:hover {
 	-fx-stroke-width: 5;
 	-fx-stroke: BLUE;

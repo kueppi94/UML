@@ -7,17 +7,13 @@ import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import model.ConnectionLine;
-import model.ConnectionPoint;
-import model.DataType;
-import model.DraggableNodeFactory;
-import model.Property;
-import model.UMLClass;
-import model.Visibility;
+import model.*;
 
 import java.awt.MouseInfo;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 
@@ -48,9 +44,18 @@ public class SampleController {
 		 UMLClass uml2 = new UMLClass("Testklasse2");
 		 
 		 Content.getChildren().add(uml);
-		 Content.getChildren().add(uml2);		 
+		 Content.getChildren().add(uml2);			 
 		 
-		 System.out.println(Content.getChildren());
+		 Map<String, DataType> a = new HashMap<String, DataType>();
+		 a.put("abc", DataType.BOOLEAN);
+		 a.put("abc", DataType.BOOLEAN);
+		 
+		 
+		 model.Method m = new model.Method(Visibility.PUBLIC, true, "test", a, DataType.INT);
+		 System.out.println(a.size());
+		 
+		 uml.addMethod(m);
+		 
 		 
 		 //UMLClass uml2 = new UMLClass("Testklasse2");
 		 

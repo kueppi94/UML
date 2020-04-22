@@ -1,28 +1,50 @@
 package model;
 
+import java.awt.Font;
 import java.util.*;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 
-public class Method extends javafx.scene.layout.HBox {
+public class Method extends javafx.scene.layout.HBox implements Styles {
+	
 	private Visibility visibility;
-	private boolean isAbstract;
+	private SimpleBooleanProperty isAbstractProperty = new SimpleBooleanProperty();	
 	//null bei void
 	private DataType returnType;
-	private String name;
+	private SimpleStringProperty nameProperty = new SimpleStringProperty();
 	
 	private Map<String, DataType> parameters = new HashMap<String, DataType>();
 	
-	public Method(Visibility visibility, boolean isAbstract, DataType returnType, String name, Map<String, DataType> parameters) {
+	public Method(Visibility visibility, boolean isAbstract, String name, Map<String, DataType> parameters, DataType returnType) {
+		Label visibilityLabel = new Label();		
+		Label returnTypeLabel = new Label();
+		Label nameLabel = new Label();
+		HBox propertyBox = new HBox();
+		
 		setVisibility(visibility);
 		setAbstract(isAbstract);
+		setName(name);
 		setReturnType(returnType);
 		setParameters(parameters);		
+				
+		visibilityLabel.textProperty().bind(this.visibility.umlSignProperty());			
+		returnTypeLabel.textProperty().bind(this.returnType.umlNameProperty());
+		nameLabel.textProperty().bind(this.nameProperty);
+		isAbstractProperty.addListener(new ChangeListener<Object>(){
+	        @Override public void changed(ObservableValue<?> o,Object oldVal, Object newVal){	        	
+	        	if((Boolean)newVal)
+	        		nameLabel.getStyleClass().add(ITALIC);
+	             else
+	            	 nameLabel.getStyleClass().remove(ITALIC);
+	        }
+	      });		
 		
-		Label a = new Label();
-		a.textProperty().bind(visibility.umlSignProperty());
-		
-		getChildren().add(a);
+		getChildren().addAll(visibilityLabel, nameLabel, propertyBox, returnTypeLabel);
 	}
 
 	public Visibility getVisibility() {
@@ -34,11 +56,11 @@ public class Method extends javafx.scene.layout.HBox {
 	}
 
 	public boolean isAbstract() {
-		return isAbstract;
+		return isAbstractProperty.get();
 	}
 
 	public void setAbstract(boolean isAbstract) {
-		this.isAbstract = isAbstract;
+		this.isAbstractProperty.set(isAbstract);
 	}
 
 	public DataType getReturnType() {
@@ -50,11 +72,11 @@ public class Method extends javafx.scene.layout.HBox {
 	}
 
 	public String getName() {
-		return name;
+		return this.nameProperty.get();
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.nameProperty.set(name);
 	}
 
 	public Map<String, DataType> getParameters() {
