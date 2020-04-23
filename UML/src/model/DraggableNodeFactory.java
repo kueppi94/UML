@@ -7,7 +7,7 @@ import javafx.scene.input.MouseEvent;
 
 
 public abstract class DraggableNodeFactory {	
-	
+	 
 	public static Node create(final Node node) {
 	    final DragContext dragContext = new DragContext();
 	    final Group wrapGroup = new Group(node);

@@ -67,7 +67,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public final class DraggablePanelsExample extends Application {
-    private final BooleanProperty dragModeActiveProperty =
+    private final BooleanProperty dragModeActiveProperty = 
             new SimpleBooleanProperty(this, "dragModeActive", true);
 
     @Override

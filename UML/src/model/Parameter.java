@@ -9,7 +9,7 @@ import javafx.scene.control.Label;
 public class Parameter extends javafx.scene.layout.HBox {
 	private SimpleStringProperty nameProperty = new SimpleStringProperty();
 	private DataType dataType;
-	
+	 
 	public Parameter(String name, DataType dataType) {		
 		Label nameLabel = new Label();
 		Label dataTypeLabel = new Label();			

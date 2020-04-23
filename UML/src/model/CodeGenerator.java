@@ -2,7 +2,7 @@ package model;
 
 public interface CodeGenerator {
 	
-	public void saveClassToFile();
+	public void saveClassToFile(); 
 	
 	//usw
 }

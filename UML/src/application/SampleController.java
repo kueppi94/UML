@@ -43,7 +43,7 @@ public class SampleController {
 		//testing
 		 UMLClass uml = new UMLClass("Testklasse1");
 		 UMLClass uml2 = new UMLClass("Testklasse2");
-		 
+		  
 		 Content.getChildren().add(uml);
 		 Content.getChildren().add(uml2);			 
 		 

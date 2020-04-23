@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleStringProperty;
 
 public enum Visibility {
 	PUBLIC ("+", "public"), PROTECTED ("#", "protected"), NO_MODIFIER("~", ""), PRIVATE("-", "private");
-	
+	 
 	private SimpleStringProperty umlSign = new SimpleStringProperty();
 	private String accessModifierJava;
 	

@@ -6,3 +6,4 @@ public interface Styles {
 	String ITALIC = "italic";
 	String CONNECTIONLINE = "connectionLine";	
 }
+ 

@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 
 public class ConnectionPoint extends javafx.scene.shape.Rectangle {
 
-	public static final String TOP = "top";
+	public static final String TOP = "top"; 
 	public static final String BOTTOM = "bottom";
 	public static final String LEFT = "left";
 	public static final String RIGHT = "right";

@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
  * Aus UML-Sicht ist die "Eigenschaft" nur ein Parameter mit Sichtbarkeit.
  * Daher erbt Property von Parameter
  */
-
+ 
 public class Property extends Parameter {
 
 	private Visibility visibility;	

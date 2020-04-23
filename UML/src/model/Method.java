@@ -17,7 +17,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class Method extends javafx.scene.Group implements Styles {
-	
+	 
 	private Visibility visibility;
 	private SimpleBooleanProperty isAbstractProperty = new SimpleBooleanProperty();	
 	//null bei void

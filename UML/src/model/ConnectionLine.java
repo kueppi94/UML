@@ -7,7 +7,7 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.VLineTo;
 
 public class ConnectionLine extends javafx.scene.shape.Path implements Styles {
-	private ConnectionPoint start;
+	private ConnectionPoint start; 
 	private ConnectionPoint end;
 	
 	private MoveTo startpoint = new MoveTo();

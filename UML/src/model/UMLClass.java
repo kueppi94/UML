@@ -30,7 +30,7 @@ import javafx.scene.input.MouseEvent;
 public class UMLClass extends javafx.scene.Group implements Styles {	
 	
 	private StringProperty classNameProperty = new SimpleStringProperty();		
-	
+	 
 	private BooleanProperty isAbstractProperty = new SimpleBooleanProperty();
 	private static final int ABSTRACT_ID = 1;	
 	private static final String ABSTRACT_TEXT = "{abstract}";

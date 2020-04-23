@@ -18,7 +18,7 @@ import javafx.geometry.Insets;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
-		try {			
+		try {			 
 			VBox root = (VBox)FXMLLoader.load(getClass().getResource("/View/Main.fxml"));			
 			
 			Scene scene = new Scene(root,400,400);
