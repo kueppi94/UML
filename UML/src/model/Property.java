@@ -1,49 +1,33 @@
 package model;
 
-import javax.lang.model.SourceVersion;
-
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.Label;
 
-public class Property extends javafx.scene.layout.HBox {
+/*
+ * Aus UML-Sicht ist die "Eigenschaft" nur ein Parameter mit Sichtbarkeit.
+ * Daher erbt Property von Parameter
+ */
 
-	private Visibility visibility;
-	private SimpleStringProperty nameProperty = new SimpleStringProperty();
-	private DataType dataType;
+public class Property extends Parameter {
+
+	private Visibility visibility;	
 	
 	public Property(Visibility visiblity, String name, DataType dataType) {
-
-		Label visibilityLabel = new Label();
-		Label nameLabel = new Label();
-		Label dataTypeLabel = new Label();		
+		super(name, dataType);
 		
-		setVisiblity(visiblity);
-		setName(name);
-		setDataType(dataType);		
+		Label visibilityLabel = new Label();			
 		
-		visibilityLabel.textProperty().bind(Bindings.concat(this.visibility.umlSignProperty(), " "));		
-		nameLabel.textProperty().bind(Bindings.concat(this.nameProperty, ": "));		
-		dataTypeLabel.textProperty().bind(this.dataType.umlNameProperty());
-					
+		setVisiblity(visiblity);			
+		
+		visibilityLabel.textProperty().bind(Bindings.concat(this.visibility.umlSignProperty(), " "));				
 
-		getChildren().addAll(visibilityLabel, nameLabel, dataTypeLabel);
+		getChildren().add(0, visibilityLabel);
 	}
 
-	public void setVisiblity(Visibility visiblity) {
-		this.visibility = visiblity;
-	}
-
-	public void setName(String name) {
-		
-		if(SourceVersion.isName(name))
-			this.nameProperty.set(name);
-		else
-			throw new IllegalArgumentException("Name der Eigenschaft ist ungültig!");		
-	}
-
-	public void setDataType(DataType dataType) {
-		this.dataType = dataType;
-	}		
+	public void setVisiblity(Visibility visibility) {			
+		if(this.visibility == null)
+			this.visibility = visibility;
+		else				
+			this.visibility.update(visibility);		
+	}			
 }

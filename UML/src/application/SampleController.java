@@ -12,6 +12,7 @@ import model.*;
 import java.awt.MouseInfo;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -46,15 +47,21 @@ public class SampleController {
 		 Content.getChildren().add(uml);
 		 Content.getChildren().add(uml2);			 
 		 
-		 Map<String, DataType> a = new HashMap<String, DataType>();
-		 a.put("abc", DataType.BOOLEAN);
-		 a.put("abc", DataType.BOOLEAN);
+		 ArrayList<Parameter> a = new ArrayList<Parameter>();
+		 a.add(new Parameter("EinDatentyp", DataType.DOUBLE));
+		 a.add(new Parameter("EinDatenty2p", DataType.FLOAT));
+		 
+		 ArrayList<Parameter> b = new ArrayList<Parameter>();
 		 
 		 
-		 model.Method m = new model.Method(Visibility.PUBLIC, true, "test", a, DataType.INT);
-		 System.out.println(a.size());
+		 model.Method m = new model.Method(Visibility.PUBLIC, true, "test", a, DataType.INT);		 
+		 model.Method m2 = new model.Method(Visibility.PROTECTED, false, "test1", b, DataType.DOUBLE);		 
+		 
+		 
+		 m2.setVisibility(Visibility.PUBLIC);
 		 
 		 uml.addMethod(m);
+		 uml.addMethod(m2);
 		 
 		 
 		 //UMLClass uml2 = new UMLClass("Testklasse2");

@@ -74,17 +74,17 @@ public class UMLClass extends javafx.scene.Group implements Styles {
 		return isAbstractProperty.get();
 	}
 	
-	public void addProperty(Property property) {		
-		properties.add(property);	
+	public boolean addProperty(Property property) {		
+		return properties.add(property);	
 		
 	}	
 	
 	public void setProperty(int pid, Property property) {		
-		properties.set(pid, property);
+		properties.set(pid, property);		
 	}	
 	
-	public void addMethod(Method method) {
-		methods.add(method);				
+	public boolean addMethod(Method method) {
+		return methods.add(method);			
 	}
 	
 	public void setMethod(int mid, Method method) {

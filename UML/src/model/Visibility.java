@@ -19,5 +19,12 @@ public enum Visibility {
 	
 	public String toJava() {
 		return accessModifierJava;
+	}	
+	
+	//wird benötigt, um Objekte dieser Klasse zu aktualisiern. Bei einer einfachen Zuweisung gehen die Bindings verloren...
+	public void update(Visibility newVisibility) {		
+		umlSign.set(newVisibility.umlSign.get());
+		accessModifierJava = newVisibility.accessModifierJava;
+		
 	}
 }
