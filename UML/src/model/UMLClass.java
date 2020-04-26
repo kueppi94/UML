@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public class UMLClass extends javafx.scene.Group implements Styles {	
+public class UMLClass extends javafx.scene.Group implements Styles, SelectableNode {	
 	
 	private StringProperty classNameProperty = new SimpleStringProperty();		
 	 
@@ -38,8 +38,7 @@ public class UMLClass extends javafx.scene.Group implements Styles {
 	private SimpleListProperty<Property> properties = new SimpleListProperty<Property>(FXCollections.observableArrayList());
 	
 	private SimpleListProperty<Method> methods = new SimpleListProperty<Method>(FXCollections.observableArrayList());
-	
-	
+		
 	//Verbindungspunkte für Beziehungen zwischen Klassen, Interfaces usw.
 	private ConnectionPoint topConnection;
 	private ConnectionPoint botConnection;
@@ -53,6 +52,14 @@ public class UMLClass extends javafx.scene.Group implements Styles {
 		getChildren().addAll(uml, topConnection, botConnection, leftConnection, rightConnection);
 		
 	}	
+	
+	public void select() {
+		
+	}
+	
+	public void unselect() {
+		
+	}
 	
 	public StringProperty classNameProperty() {
 		return classNameProperty;

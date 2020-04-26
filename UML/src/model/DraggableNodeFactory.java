@@ -10,16 +10,7 @@ public abstract class DraggableNodeFactory {
 	 
 	public static Node create(final Node node) {
 	    final DragContext dragContext = new DragContext();
-	    final Group wrapGroup = new Group(node);
-	 
-	    wrapGroup.addEventFilter(
-	        MouseEvent.ANY,
-	        new EventHandler<MouseEvent>() {
-	            public void handle(final MouseEvent mouseEvent) {	                
-                    // disable mouse events for all children
-                    mouseEvent.consume();	                
-	             }
-	        });
+	    final Group wrapGroup = new Group(node);	    
 	 
 	    wrapGroup.addEventFilter(
 	        MouseEvent.MOUSE_PRESSED,

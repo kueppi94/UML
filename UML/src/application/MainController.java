@@ -3,6 +3,7 @@
 package application;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -23,6 +24,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Accordion;
 import javafx.scene.control.Label;
 import javafx.scene.input.*;
 import javafx.scene.paint.Color;
@@ -35,11 +37,27 @@ import javafx.scene.shape.QuadCurveTo;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class SampleController {
+public class MainController {
 	@FXML
 	private AnchorPane Content;		
 	
-	public void initialize() {	    
+	@FXML
+	private AnchorPane InspectorPane;
+	
+	private Node selectedNode;
+	
+	public void initialize() {	
+		SelectionHandler handler = new SelectionHandler(Content, InspectorPane);
+		/*
+		try {
+			InspectorPane.getChildren().add(FXMLLoader.load(getClass().getResource("/view/ClassInspector.fxml")));
+		}
+		catch (Exception e){
+			System.out.println(e.getStackTrace());
+		}
+		*/
+		
+		
 		//testing
 		 UMLClass uml = new UMLClass("Testklasse1");
 		 UMLClass uml2 = new UMLClass("Testklasse2");
@@ -123,6 +141,8 @@ public class SampleController {
 		 
 		 uml.addProperty(test);	
 		 //end testing		 
+		 
+		 //System.out.print(InspectorPane);
 	 }	 
 	
 	@FXML
