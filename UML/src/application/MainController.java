@@ -145,7 +145,7 @@ public class MainController {
 		 //System.out.print(InspectorPane);
 	 }	 
 	
-	@FXML
+	
 	public void test() {	
 		UMLClass uml = ((UMLClass)Content.getChildren().get(0));
 		UMLClass uml2 = ((UMLClass)Content.getChildren().get(1));

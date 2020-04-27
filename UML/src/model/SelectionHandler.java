@@ -1,5 +1,6 @@
 package model;
 
+import application.ClassInspectorController;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,6 +14,7 @@ public class SelectionHandler {
 	private SimpleObjectProperty<SelectableNode> selectedNode = new SimpleObjectProperty<SelectableNode>();
 	
 	private Pane InspectorPane;
+	private ClassInspectorController inspectorController;
 	
 	public SelectionHandler(Pane root, Pane inspectorPane) {
 		this.InspectorPane = inspectorPane;
@@ -40,15 +42,21 @@ public class SelectionHandler {
 			public void changed(ObservableValue<? extends SelectableNode> observable, SelectableNode oldValue, SelectableNode newValue) {
 				String inspectorFxml = "";
 				
-				if(newValue instanceof UMLClass) 
-					inspectorFxml = "/view/ClassInspector.fxml";					
+				if(newValue instanceof UMLClass) {
+					inspectorFxml = "/view/ClassInspector.fxml";											
+				}									
 					
-				try {
-					InspectorPane.getChildren().add(FXMLLoader.load(getClass().getResource(inspectorFxml)));
-				}
-				catch(Exception e) { }
 				
-					
+				InspectorPane.getChildren().clear();
+				 
+				try {		
+					FXMLLoader loader = new FXMLLoader(getClass().getResource(inspectorFxml));	
+					InspectorPane.getChildren().add(loader.load());	
+					inspectorController = loader.getController();					
+				}
+				catch(Exception e) { System.out.println(e.getMessage()); }					
+				
+				inspectorController.setInspectedClass(((UMLClass)newValue));					
 			}
 			
 		});

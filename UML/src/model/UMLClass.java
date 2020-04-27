@@ -27,7 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public class UMLClass extends javafx.scene.Group implements Styles, SelectableNode {	
+public class UMLClass extends javafx.scene.Group implements Styles, SelectableNode {
 	
 	private StringProperty classNameProperty = new SimpleStringProperty();		
 	 
