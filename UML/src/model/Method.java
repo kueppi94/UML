@@ -16,7 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-public class Method extends javafx.scene.Group implements Styles {
+public class Method extends javafx.scene.Group {
 	 
 	private Visibility visibility;
 	private SimpleBooleanProperty isAbstractProperty = new SimpleBooleanProperty();	
@@ -56,10 +56,13 @@ public class Method extends javafx.scene.Group implements Styles {
 	}
 
 	public void setVisibility(Visibility visibility) {
+		this.visibility = visibility;
+		/*
 		if(this.visibility == null)
 			this.visibility = visibility;
 		else				
 			this.visibility.update(visibility);	
+			*/
 	}
 
 	public boolean isAbstract() {
@@ -111,9 +114,9 @@ public class Method extends javafx.scene.Group implements Styles {
 		isAbstractProperty.addListener(new ChangeListener<Object>(){
 	        @Override public void changed(ObservableValue<?> o,Object oldVal, Object newVal){	        	
 	        	if((Boolean)newVal)	        	
-	        		nameLabel.getStyleClass().add(ITALIC);	 	        		       	
+	        		nameLabel.getStyleClass().add(Style.ITALIC.css());	 	        		       	
 	             else
-	            	 nameLabel.getStyleClass().remove(ITALIC);
+	            	 nameLabel.getStyleClass().remove(Style.ITALIC.css());
 	        }
 	      });	
 		

@@ -4,6 +4,7 @@ import javax.lang.model.SourceVersion;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.scene.control.Label;
 
 public class Parameter extends javafx.scene.layout.HBox {
@@ -30,12 +31,14 @@ public class Parameter extends javafx.scene.layout.HBox {
 			return false;
 		
 		this.nameProperty.set(name);		
-		return true;
-		
-		
+		return true;		
+	}
+	
+	public StringProperty nameProperty() {
+		return nameProperty;
 	}
 
 	public void setDataType(DataType dataType) {
 		this.dataType = dataType;
-	}		
+	}
 }

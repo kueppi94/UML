@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ListProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -27,7 +28,7 @@ import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
-public class UMLClass extends javafx.scene.Group implements Styles, SelectableNode {
+public class UMLClass extends javafx.scene.Group implements SelectableNode {
 	
 	private StringProperty classNameProperty = new SimpleStringProperty();		
 	 
@@ -79,6 +80,10 @@ public class UMLClass extends javafx.scene.Group implements Styles, SelectableNo
 	
 	public boolean isAbstract() {
 		return isAbstractProperty.get();
+	}
+	
+	public ListProperty<Property> propertiesProperty() {
+		return properties;
 	}
 	
 	public boolean addProperty(Property property) {		
@@ -133,7 +138,7 @@ public class UMLClass extends javafx.scene.Group implements Styles, SelectableNo
 		umlClassBox.setAlignment(Pos.CENTER);
 		
 		Label classNameLabel = new Label(className);
-		classNameLabel.getStyleClass().add(UML_CLASS_NAME);
+		classNameLabel.getStyleClass().add(Style.UML_CLASS_NAME.css());
 		
 		VBox propertyBox = new VBox();		
 		VBox methodBox = new VBox();
@@ -148,7 +153,7 @@ public class UMLClass extends javafx.scene.Group implements Styles, SelectableNo
 		setClassName(className);		
 		
 		//Set Style
-		umlClassBox.getStyleClass().add(UML_CLASS);		
+		umlClassBox.getStyleClass().add(Style.UML_CLASS.css());		
 		
 		//Define Bindings
 		classNameLabel.textProperty().bind(classNameProperty);		

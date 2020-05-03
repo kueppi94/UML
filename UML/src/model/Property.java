@@ -24,10 +24,17 @@ public class Property extends Parameter {
 		getChildren().add(0, visibilityLabel);
 	}
 
-	public void setVisiblity(Visibility visibility) {			
+	public void setVisiblity(Visibility visibility) {	
+		this.visibility = visibility;
+		/*
 		if(this.visibility == null)
 			this.visibility = visibility;
 		else				
-			this.visibility.update(visibility);		
-	}			
+			this.visibility.update(visibility);	
+			*/	
+	}
+	
+	public Visibility getVisibility() {
+		return visibility;
+	}
 }

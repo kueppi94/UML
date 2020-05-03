@@ -6,7 +6,7 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.VLineTo;
 
-public class ConnectionLine extends javafx.scene.shape.Path implements Styles {
+public class ConnectionLine extends javafx.scene.shape.Path {
 	private ConnectionPoint start; 
 	private ConnectionPoint end;
 	
@@ -34,6 +34,6 @@ public class ConnectionLine extends javafx.scene.shape.Path implements Styles {
 		}
 		
 		
-		getStyleClass().add(CONNECTIONLINE);
+		getStyleClass().add(Style.CONNECTIONLINE.css());
 		}	
 }
