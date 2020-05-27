@@ -18,7 +18,7 @@
 }
 
 .connectionLine:hover {
-	-fx-stroke-width: 5;
+	-fx-stroke-width: 5px;
 	-fx-stroke: BLUE;
 }
 
@@ -28,4 +28,9 @@
 
 .test:hover {
 	-fx-opacity: 1;
+}
+
+.h-box {        
+    -fx-spacing: 10px;
+    -fx-padding: 0 0 3 0px;
 }

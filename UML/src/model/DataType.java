@@ -1,30 +1,35 @@
 package model;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 
 public enum DataType { 
 	BYTE("byte", "0"), SHORT("short", "0"), INT("int", "0"), 
 	LONG("long", "0L"), FLOAT("float", "0.0f"), DOUBLE("double", "0.0d"), 
-	BOOLEAN("boolean", "false"), CHAR("char", "'u0000'"), STRING("String", "null"),
-	OTHER("", "null");
+	BOOLEAN("boolean", "false"), CHAR("char", "'u0000'"), STRING("String", "null");
 	
-	private SimpleStringProperty umlName = new SimpleStringProperty();
-	private String defaultValue;
+	public final String UML_NAME;
+	public final String DEFAULT_VALUE;
 	
 	private DataType(String name, String defaultValue) {
-		this.umlName.set(name);
-		this.defaultValue = defaultValue;
+		this.UML_NAME = name;
+		this.DEFAULT_VALUE = defaultValue;
 	}
 	
-	public SimpleStringProperty umlNameProperty() {
-		return umlName;
+	public StringProperty umlNameProperty() {
+		return new SimpleStringProperty(UML_NAME);
 	}
 	
 	public String getName() {
-		return umlName.get();
+		return UML_NAME;
 	}
 	
 	public String getDefaultValue() {
-		return defaultValue;
+		return DEFAULT_VALUE;
+	}
+	
+	@Override
+	public String toString() {
+		return UML_NAME;
 	}
 }

@@ -71,15 +71,23 @@ public class MainController {
 		 
 		 ArrayList<Parameter> b = new ArrayList<Parameter>();
 		 
+		 ArrayList<Parameter> c = new ArrayList<Parameter>();
+		 
+		 c.add(new Parameter("ABC", DataType.BOOLEAN));
+		 c.add(new Parameter("DEF", DataType.INT));
+		 c.add(new Parameter("FFFF", DataType.CHAR));
+		 c.add(new Parameter("TTT", DataType.SHORT));
 		 
 		 model.Method m = new model.Method(Visibility.PUBLIC, true, "test", a, DataType.INT);		 
-		 model.Method m2 = new model.Method(Visibility.PROTECTED, false, "test1", b, DataType.DOUBLE);		 
+		 model.Method m2 = new model.Method(Visibility.PROTECTED, false, "test1", b, DataType.DOUBLE);		
+		 model.Method m3 = new model.Method(Visibility.NO_MODIFIER, true, "test3", c, DataType.CHAR);
 		 
 		 
 		 m2.setVisibility(Visibility.PUBLIC);
 		 
 		 uml.addMethod(m);
 		 uml.addMethod(m2);
+		 uml.addMethod(m3);
 		 
 		 
 		 //UMLClass uml2 = new UMLClass("Testklasse2");
@@ -137,9 +145,10 @@ public class MainController {
 		 
 		 
 		 Property test = new Property(Visibility.NO_MODIFIER, "_z", DataType.BOOLEAN);		 
-		 
+		 Property test2 = new Property(Visibility.PRIVATE, "_z", DataType.BOOLEAN);
 		 
 		 uml.addProperty(test);	
+		 uml.addProperty(test2);	
 		 //end testing		 
 		 
 		 //System.out.print(InspectorPane);

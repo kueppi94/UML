@@ -13,6 +13,7 @@ import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -26,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Callback;
+import model.DataType;
 import model.DrawingPane;
 import model.Parameter;
 import model.Property;
@@ -47,42 +49,54 @@ public class ClassInspectorController implements Initializable {
 	
 	 
 	public void initialize(URL location, ResourceBundle resources) {		
-		inspectedClass.addListener(new ChangeListener<Object>(){
-	        @Override public void changed(ObservableValue<?> o,Object oldVal, Object newVal){	
-	        	UMLClass inspectedClassNew = ((UMLClass)newVal);
-	        	
-	        	Name.textProperty().bindBidirectional(inspectedClassNew.classNameProperty());	
-	    		IsAbstract.selectedProperty().bindBidirectional(inspectedClassNew.abstractProperty());
-	    		    		
+		inspectedClass.addListener(new ChangeListener<UMLClass>(){
+			
+			//Initialisiert und aktualisiert die Daten anhand der selektierten Klasse
+			@Override
+			public void changed(ObservableValue<? extends UMLClass> o, UMLClass oldVal, UMLClass newVal) {				
+				
+				Name.textProperty().bindBidirectional(newVal.classNameProperty());	
+	    		IsAbstract.selectedProperty().bindBidirectional(newVal.abstractProperty());	    		
 	    		
-	    		//Testing
-	    		ListProperty<Property> prop = inspectedClassNew.propertiesProperty();	
+	    		ListProperty<Property> prop = newVal.propertiesProperty();	
 	    		for(Property p : prop.get()) {	    		
 	    			HBox container = new HBox();	    		
 	    			
 	    			ComboBox<Visibility> cmbVisibility = new ComboBox<Visibility>();
 	    			cmbVisibility.getItems().setAll(Visibility.values());
+	    			cmbVisibility.getSelectionModel().select(p.getVisibility());
 	    			
 	    			cmbVisibility.valueProperty().addListener(new ChangeListener<Visibility>(){
 						@Override
 						public void changed(ObservableValue<? extends Visibility> o, Visibility oldVal, Visibility newVal) {												
-							p.setVisiblity(newVal);
-							
-							System.out.println(p.getVisibility());
+							p.setVisiblity(newVal);							
 						}
 	    		      });
 	    			
-	    			container.getChildren().addAll(cmbVisibility);
-	    			PropertyBox.getChildren().add(container);
-	    			 			
+	    			TextField tfPropName = new TextField();
+	    			tfPropName.textProperty().bindBidirectional(p.nameProperty());
 	    			
+	    			ComboBox<DataType> cmbDataType = new ComboBox<DataType>();
+	    			cmbDataType.getItems().setAll(DataType.values());
+	    			cmbDataType.getSelectionModel().select(p.getDataType());
 	    			
-	    			//container.getChildren().add(cmbVisibility);
-	    			//PropertyBox.getChildren().add(container);
+	    			cmbDataType.valueProperty().addListener(new ChangeListener<DataType>(){
+						@Override
+						public void changed(ObservableValue<? extends DataType> o, DataType oldVal, DataType newVal) {												
+							p.setDataType(newVal);					
+						}
+	    		      });	    			
+	    			
+	    			container.getStyleClass().add(Style.H_BOX.css());   			
+	    			container.getChildren().addAll(cmbVisibility, tfPropName, cmbDataType);
+	    			PropertyBox.getChildren().add(container);	    			
 	    		}
-	    		//End Testing
-	    		 
-	        }
+	    		
+				
+				
+				
+			}		
+	        	
 	      });		
 	}
 

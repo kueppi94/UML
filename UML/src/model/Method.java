@@ -105,7 +105,7 @@ public class Method extends javafx.scene.Group {
 			
 				
 		visibilityLabel.textProperty().bind(
-				Bindings.concat(this.visibility.umlSignProperty(), " "));
+				Bindings.concat(this.visibility.UML_SIGN, " "));
 		
 		nameLabel.textProperty().bind(Bindings.concat(this.nameProperty, " "));
 		

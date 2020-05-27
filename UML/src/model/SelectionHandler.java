@@ -43,7 +43,7 @@ public class SelectionHandler {
 				String inspectorFxml = "";
 				
 				if(newValue instanceof UMLClass) {
-					inspectorFxml = "/view/ClassInspector.fxml";											
+					inspectorFxml = "/view/ClassInspector_new.fxml";											
 				}									
 					
 				
