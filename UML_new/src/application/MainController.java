@@ -159,6 +159,19 @@ public class MainController {
 		UMLClass uml = ((UMLClass)Content.getChildren().get(0));
 		UMLClass uml2 = ((UMLClass)Content.getChildren().get(1));
 		
+		model.Method m1 = new model.Method(Visibility.PRIVATE, false, "test123Gen", DataType.BOOLEAN);
+		m1.addParameter(new Parameter("EinTest", DataType.BOOLEAN));
+		
+		uml2.addMethod(m1);
+		
+		CodeGeneratorJava a = new CodeGeneratorJava(Content, "OutputDir", "java");
+		
+		System.out.println(uml2.methodsProperty().get().get(0).parameterProperty().get().get(0));
+		
+		System.out.println(a.getParameterCode(uml2.methodsProperty().get().get(0).parameterProperty().get().get(0), ", "));
+		
+		/*
+		
 		((UMLClass)Content.getChildren().get(0)).addProperty(new Property(Visibility.PUBLIC, "z3", DataType.STRING));
 		if(((UMLClass)Content.getChildren().get(0)).isAbstract())		
 			((UMLClass)Content.getChildren().get(0)).setAbstract(false);
@@ -173,5 +186,6 @@ public class MainController {
 		 Content.getChildren().add(test1);	
 		 
 		 System.out.println(Content.getChildren());
+		 */
 	}
 }

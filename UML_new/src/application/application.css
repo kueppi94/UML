@@ -1,0 +1,36 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+ 
+.umlClass {		
+	-fx-border-color: black;		
+	-fx-border-width: 3px;
+	-fx-background-color: WHITE;
+	-fx-spacing: 5px;
+	-fx-padding: 5px;		
+}
+
+.umlClassName {
+	-fx-font-size: 15px;
+    -fx-font-weight: bold;        
+}
+
+.italic {
+	-fx-font-style: italic;
+}
+
+.connectionLine:hover {
+	-fx-stroke-width: 5px;
+	-fx-stroke: BLUE;
+}
+
+.test {
+	 -fx-opacity: 0;
+}
+
+.test:hover {
+	-fx-opacity: 1;
+}
+
+.h-box {        
+    -fx-spacing: 10px;
+    -fx-padding: 0 0 3 0px;
+}
