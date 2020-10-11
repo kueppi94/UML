@@ -1,17 +1,27 @@
 package model;
 
+import java.util.List;
+
 import javafx.beans.property.ListProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 
 public class CodeGeneratorJava extends CodeGenerator {
-	public CodeGeneratorJava(Node canvas, String outputDir, String ext) {
+	
+	private List<UMLClass> classes;	
+	
+	public CodeGeneratorJava(AnchorPane canvas, String outputDir, String ext) {
 		super(canvas, outputDir, ext);		
 	}
 	
 	@Override
 	public String getPropertyCode(Property property) {		
-		return String.format("vis=%s dataType=%s name=%s;",
+		if(property.getVisibility().equals(Visibility.NO_MODIFIER))
+			return String.format("\t%s %s;\n", 
+					property.getDataType(), property.getName());
+		
+		return String.format("\t%s %s %s;\n",
 				property.getVisibility().ACCESS_MODIFIER_JAVA, property.getDataType(), property.getName());
 	}
 	
@@ -35,15 +45,29 @@ public class CodeGeneratorJava extends CodeGenerator {
 			paraCode += getParameterCode(para.get(i), sep);			
 		}		
 		
-		return String.format("%vis %ret %name (%para) \n"
-				+ "return %retValue;\n"
-				+ "}", method.getVisibility(), method.getReturnType(), method.getName(), paraCode, 
-				method.getReturnType().DEFAULT_VALUE);
-		
+		return String.format("\t%s %s %s (%s) {\n"
+				+ "\t\treturn %s;\n"
+				+ "\t}\n", 
+				
+				method.getVisibility().ACCESS_MODIFIER_JAVA, method.getReturnType(), method.getName(), paraCode, 
+				method.getReturnType().DEFAULT_VALUE);		
 	}
 	
+	
 	@Override
-	public void saveClassToFile(UMLClass umlClass) {
+	public String getClassCode(UMLClass umlClass) {		
+		String classCode = String.format("%s %s %s {\n", "public", "class", umlClass.entityNameProperty().get());
 		
-	}
+		for(Property p : umlClass.propertiesProperty().get())
+			classCode += getPropertyCode(p);
+		
+		for(Method m : umlClass.methodsProperty().get())
+			classCode += getMethodCode(m);
+		
+		
+		classCode += "}";		
+		
+		return classCode;
+	}	
+	
 }

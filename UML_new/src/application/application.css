@@ -1,6 +1,6 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
  
-.umlClass {		
+.umlEntity {		
 	-fx-border-color: black;		
 	-fx-border-width: 3px;
 	-fx-background-color: WHITE;
@@ -8,7 +8,7 @@
 	-fx-padding: 5px;		
 }
 
-.umlClassName {
+.umlEntityName {
 	-fx-font-size: 15px;
     -fx-font-weight: bold;        
 }
@@ -22,11 +22,11 @@
 	-fx-stroke: BLUE;
 }
 
-.test {
+.connectionBox {
 	 -fx-opacity: 0;
 }
 
-.test:hover {
+.connectionBox:hover {
 	-fx-opacity: 1;
 }
 

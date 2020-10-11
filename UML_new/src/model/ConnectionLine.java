@@ -7,14 +7,14 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.VLineTo;
 
 public class ConnectionLine extends javafx.scene.shape.Path {
-	private ConnectionPoint start; 
-	private ConnectionPoint end;
+	private ConnectionBox start; 
+	private ConnectionBox end;
 	
 	private MoveTo startpoint = new MoveTo();
 	private HLineTo hLine = new HLineTo();
 	private VLineTo vLine = new VLineTo();
 	
-	public ConnectionLine(ConnectionPoint start, ConnectionPoint end) {
+	public ConnectionLine(ConnectionBox start, ConnectionBox end) {
 		this.start = start;
 		this.end = end;			
 		
@@ -26,7 +26,7 @@ public class ConnectionLine extends javafx.scene.shape.Path {
 		
 		vLine.yProperty().bind(this.end.translateYProperty());
 		
-		if(start.getPosition().equals(ConnectionPoint.TOP) || start.getPosition().equals(ConnectionPoint.BOTTOM)) {
+		if(start.getPosition().equals(ConnectionBox.TOP) || start.getPosition().equals(ConnectionBox.BOTTOM)) {
 			getElements().addAll(startpoint, vLine, hLine);	
 		}
 		else {

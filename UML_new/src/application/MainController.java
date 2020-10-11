@@ -61,9 +61,12 @@ public class MainController {
 		//testing
 		 UMLClass uml = new UMLClass("Testklasse1");
 		 UMLClass uml2 = new UMLClass("Testklasse2");
+		 UMLInterface i1 = new UMLInterface("Interface1");
+		 
 		  
 		 Content.getChildren().add(uml);
-		 Content.getChildren().add(uml2);			 
+		 Content.getChildren().add(uml2);	
+		 Content.getChildren().add(i1);
 		 
 		 ArrayList<Parameter> a = new ArrayList<Parameter>();
 		 a.add(new Parameter("parameter1", DataType.DOUBLE));
@@ -73,14 +76,21 @@ public class MainController {
 		 
 		 ArrayList<Parameter> c = new ArrayList<Parameter>();
 		 
+		 ArrayList<Parameter> d = new ArrayList<Parameter>();
+		 
 		 c.add(new Parameter("ABC", DataType.BOOLEAN));
 		 c.add(new Parameter("DEF", DataType.INT));
 		 c.add(new Parameter("FFFF", DataType.CHAR));
 		 c.add(new Parameter("TTT", DataType.SHORT));
 		 
+		 d.add(new Parameter("Para1", DataType.BOOLEAN));
+		 d.add(new Parameter("Para2", DataType.BYTE));
+		 
 		 model.Method m = new model.Method(Visibility.PUBLIC, true, "test", a, DataType.INT);		 
 		 model.Method m2 = new model.Method(Visibility.PROTECTED, false, "test1", b, DataType.DOUBLE);		
 		 model.Method m3 = new model.Method(Visibility.NO_MODIFIER, true, "test3", c, DataType.CHAR);
+		 model.Method m4 = new model.Method(Visibility.PRIVATE, true, "test1", d, DataType.CHAR);
+		 
 		 
 		 
 		 m2.setVisibility(Visibility.PUBLIC);
@@ -89,6 +99,7 @@ public class MainController {
 		 uml.addMethod(m2);
 		 uml.addMethod(m3);
 		 
+		 i1.addMethod(m4);
 		 
 		 //UMLClass uml2 = new UMLClass("Testklasse2");
 		 
@@ -147,6 +158,10 @@ public class MainController {
 		 Property test = new Property(Visibility.NO_MODIFIER, "_z1", DataType.BOOLEAN);		 
 		 Property test2 = new Property(Visibility.PRIVATE, "_z2", DataType.BOOLEAN);
 		 
+		 Property test3 = new Property(Visibility.PRIVATE, "inter1", DataType.CHAR);
+		 
+		 i1.addProperty(test3);
+		 
 		 uml.addProperty(test);	
 		 uml.addProperty(test2);	
 		 //end testing		 
@@ -155,7 +170,8 @@ public class MainController {
 	 }	 
 	
 	
-	public void test() {	
+	public void test() {		
+		
 		UMLClass uml = ((UMLClass)Content.getChildren().get(0));
 		UMLClass uml2 = ((UMLClass)Content.getChildren().get(1));
 		
@@ -164,11 +180,22 @@ public class MainController {
 		
 		uml2.addMethod(m1);
 		
-		CodeGeneratorJava a = new CodeGeneratorJava(Content, "OutputDir", "java");
 		
-		System.out.println(uml2.methodsProperty().get().get(0).parameterProperty().get().get(0));
 		
-		System.out.println(a.getParameterCode(uml2.methodsProperty().get().get(0).parameterProperty().get().get(0), ", "));
+		CodeGeneratorJava a = new CodeGeneratorJava(Content, "C:\\Users\\Küppi\\Desktop\\bin", ".java");
+		
+		//System.out.println(uml2.methodsProperty().get().get(0).parameterProperty().get().get(0));
+		
+		//System.out.println(a.getParameterCode(uml2.methodsProperty().get().get(0).parameterProperty().get().get(0), ", "));
+		
+		//System.out.println(a.getPropertyCode(uml.propertiesProperty().get(0)));
+		
+		try {
+			a.saveClassToFile();
+		}catch(Exception e) {
+			
+		}	
+		
 		
 		/*
 		

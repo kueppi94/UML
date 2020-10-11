@@ -24,6 +24,8 @@ public class SelectionHandler {
 			public void handle(MouseEvent mouseEvent) {					
 				Node target = (Node) mouseEvent.getTarget();
 				
+				System.out.println(target);
+				
 				while(!(target instanceof SelectableNode) && !target.equals(root)) 					
 					target = target.getParent();
 				
