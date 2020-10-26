@@ -21,7 +21,7 @@ public class Property extends Parameter {
 		
 		Label visibilityLabel = new Label();	
 		
-		setVisiblity(visibility);			
+		setVisibility(visibility);			
 		
 		visibilityLabel.textProperty().bind(Bindings.concat(this.visibilityProperty.get().UML_SIGN, " "));	
 		
@@ -37,7 +37,7 @@ public class Property extends Parameter {
 		getChildren().add(0, visibilityLabel);
 	}
 
-	public void setVisiblity(Visibility visibility) {		
+	public void setVisibility(Visibility visibility) {		
 		this.visibilityProperty.set(visibility);		
 	}
 	

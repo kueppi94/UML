@@ -3,11 +3,15 @@ package model;
 import java.awt.Font;
 import java.util.*;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.binding.Bindings;
+import javafx.beans.binding.StringExpression;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -21,14 +25,15 @@ import javafx.scene.layout.VBox;
 
 public class Method extends javafx.scene.Group {
 	 
-	private Visibility visibility;
+	private ObjectProperty<Visibility> visibilityProperty = new SimpleObjectProperty<Visibility>();	
+	
 	private SimpleBooleanProperty isAbstractProperty = new SimpleBooleanProperty();	
 	//null bei void
-	private DataType returnType;
+	private ObjectProperty<DataType> returnTypeProperty = new SimpleObjectProperty<DataType>();
 	private SimpleStringProperty nameProperty = new SimpleStringProperty();
 	
-	private SimpleListProperty<Parameter> parameters = new SimpleListProperty<Parameter>(FXCollections.observableArrayList());
-	
+	private SimpleListProperty<Parameter> parameters = new SimpleListProperty<Parameter>(FXCollections.observableArrayList());	
+
 	public Method(Visibility visibility, boolean isAbstract, String name, List<Parameter> parameters, DataType returnType) {
 		
 		Node method = createMethodNode(visibility, isAbstract, name, parameters, returnType);		
@@ -55,17 +60,11 @@ public class Method extends javafx.scene.Group {
 	
 
 	public Visibility getVisibility() {
-		return visibility;
+		return visibilityProperty.get();
 	}
 
 	public void setVisibility(Visibility visibility) {
-		this.visibility = visibility;
-		/*
-		if(this.visibility == null)
-			this.visibility = visibility;
-		else				
-			this.visibility.update(visibility);	
-			*/
+		this.visibilityProperty.set(visibility);	
 	}
 	
 	public BooleanProperty abstractProperty() {
@@ -81,11 +80,11 @@ public class Method extends javafx.scene.Group {
 	}
 
 	public DataType getReturnType() {
-		return returnType;
+		return returnTypeProperty.get();
 	}
 
 	public void setReturnType(DataType returnType) {
-		this.returnType = returnType;
+		this.returnTypeProperty.set(returnType);
 	}
 	
 	public StringProperty nameProperty() {
@@ -115,8 +114,7 @@ public class Method extends javafx.scene.Group {
 	
 	public void setParameter(int pid, Property parameter) {		
 		parameters.set(pid, parameter);		
-	}
-	
+	}	
 	
 	private Node createMethodNode(Visibility visibility, boolean isAbstract, String name, List<Parameter> parameters, DataType returnType) {
 		Label visibilityLabel = new Label();		
@@ -128,12 +126,29 @@ public class Method extends javafx.scene.Group {
 		setReturnType(returnType);
 			
 				
-		visibilityLabel.textProperty().bind(
-				Bindings.concat(this.visibility.UML_SIGN, " "));
+		visibilityLabel.setText(getVisibility().UML_SIGN + " ");		
+		
+		this.visibilityProperty.addListener(new ChangeListener<Visibility>(){
+
+			@Override
+			public void changed(ObservableValue<? extends Visibility> o, Visibility oldVal, Visibility newVal) {				
+				visibilityLabel.setText(getVisibility().UML_SIGN + " ");						
+			}	        
+	      });
+		
 		
 		nameLabel.textProperty().bind(Bindings.concat(this.nameProperty, " "));
 		
-		returnTypeLabel.textProperty().bind(this.returnType.umlNameProperty());		
+		returnTypeLabel.setText(getReturnType().UML_NAME);		
+		
+		this.returnTypeProperty.addListener(new ChangeListener<DataType>() {
+			@Override
+			public void changed(ObservableValue<? extends DataType> o, DataType oldVal, DataType newVal) {								
+				returnTypeLabel.setText(newVal.UML_NAME);			
+			}	
+			
+		});
+		
 		
 		isAbstractProperty.addListener(new ChangeListener<Object>(){
 	        @Override public void changed(ObservableValue<?> o,Object oldVal, Object newVal){	        	
@@ -142,22 +157,42 @@ public class Method extends javafx.scene.Group {
 	             else
 	            	 nameLabel.getStyleClass().remove(Style.ITALIC.css());
 	        }
-	      });	
+	      });			
 		
 		this.parameters.addListener((ListChangeListener<Parameter>) p -> {
 			while(p.next()) {
-				for(int i = 0; i < p.getAddedSize(); i++) {					
+				for(int i = 0; i < p.getAddedSize(); i++) {			
+					//nachträgliches Hinzufügen von Parametern
+					if(parameterBox.getChildren().size() > 0 && i == 0)
+						parameterBox.getChildren().add(new Label(", "));
+					
+					
+					//Initialisierung
 					parameterBox.getChildren().add(p.getAddedSubList().get(i));				
 					
 					if(i < p.getAddedSize() - 1)
-						parameterBox.getChildren().add(new Label(", "));
+						parameterBox.getChildren().add(new Label(", "));						
+				}	
+				
+				for(int i = 0; i < p.getRemovedSize(); i++) {
+					System.out.println(p.getFrom());
+					
+					parameterBox.getChildren().remove(p.getFrom());
+					
+					//Löschen des Komma-Labels
+					if(p.getFrom() < parameterBox.getChildren().size())						
+						parameterBox.getChildren().remove(p.getFrom());
+					
+					
 				}
 			}			
 		});		
 		
+		
+		addAllParameters(parameters);	
 		setAbstract(isAbstract);
 		setName(name);
-		addAllParameters(parameters);	
+		
 		
 		return new HBox(visibilityLabel, nameLabel, new Label("( "), parameterBox, new Label(" ): "), returnTypeLabel);
 		

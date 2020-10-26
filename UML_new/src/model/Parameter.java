@@ -67,4 +67,9 @@ public class Parameter extends javafx.scene.layout.HBox {
 	public DataType getDataType() {
 		return dataTypeProperty.get();
 	}
+	
+	@Override
+	public String toString() {
+		return nameProperty.get() + ": " + dataTypeProperty.get().UML_NAME;
+	}
 }

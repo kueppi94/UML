@@ -42,11 +42,12 @@ import model.Property;
 import model.SelectableNode;
 import model.Style;
 import model.UMLClass;
+import model.UMLInterface;
 import model.Visibility;
 
-public class ClassInspectorController implements Initializable {
+public class InterfaceInspectorController implements Initializable {
 	@FXML
-	private final ObjectProperty<UMLClass> inspectedClass = new SimpleObjectProperty<UMLClass>(null);	
+	private final ObjectProperty<UMLInterface> inspectedInterface = new SimpleObjectProperty<UMLInterface>(null);	
 	
 	private ListProperty<Property> propertiesProperty = new SimpleListProperty<Property>();
 	
@@ -74,11 +75,11 @@ public class ClassInspectorController implements Initializable {
 		newPropertyButtonAction();	
 		newMethodButtonAction();
 		
-		inspectedClass.addListener(new ChangeListener<UMLClass>(){
+		inspectedInterface.addListener(new ChangeListener<UMLInterface>(){
 			
 			//Initialisiert und aktualisiert die Eigenschaften anhand der selektierten Klasse
 			@Override
-			public void changed(ObservableValue<? extends UMLClass> o, UMLClass oldVal, UMLClass newVal) {	
+			public void changed(ObservableValue<? extends UMLInterface> o, UMLInterface oldVal, UMLInterface newVal) {	
 				//Bindings definieren				
 				propertiesProperty.bindBidirectional(newVal.propertiesProperty());
 				methodsProperty.bindBidirectional(newVal.methodsProperty());	
@@ -107,9 +108,9 @@ public class ClassInspectorController implements Initializable {
 	public void newPropertyButtonAction() {
 		NewProperty.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	Property p = new Property(Visibility.PRIVATE, "p1", DataType.INT);
+		    	Property p = new Property(Visibility.PUBLIC, "p1", DataType.INT);
 		    	
-		        inspectedClass.get().addProperty(p);
+		    	inspectedInterface.get().addProperty(p);
 		        
 		        addNewPropertyInspector(p);
 		    }
@@ -118,10 +119,10 @@ public class ClassInspectorController implements Initializable {
 	
 	public void newMethodButtonAction() {
 		NewMethod.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
-		    	Method m = new Method(Visibility.PUBLIC, false, "Method1", DataType.BOOLEAN);
+		    @Override public void handle(ActionEvent e) {		    	
+		    	Method m = new Method(Visibility.PUBLIC, true, "Method1", DataType.BOOLEAN);
 		    	
-		        inspectedClass.get().addMethod(m);
+		    	inspectedInterface.get().addMethod(m);
 		        
 		        addNewMethodInspector(m);
 		    }
@@ -174,12 +175,8 @@ public class ClassInspectorController implements Initializable {
 		cmbVisibility.getItems().setAll(Visibility.values());
 		cmbVisibility.getSelectionModel().select(p.getVisibility());
 		
-		cmbVisibility.valueProperty().addListener(new ChangeListener<Visibility>(){
-			@Override
-			public void changed(ObservableValue<? extends Visibility> o, Visibility oldVal, Visibility newVal) {												
-				p.setVisibility(newVal);							
-			}
-	      });
+		cmbVisibility.setDisable(true);
+		
 		
 		TextField tfPropName = new TextField();
 		tfPropName.textProperty().bindBidirectional(p.nameProperty());
@@ -220,18 +217,14 @@ public class ClassInspectorController implements Initializable {
 	
 	public void addNewMethodInspector(Method m) {
 		CheckBox isAbstractMethod = new CheckBox("Abstrakt?");
-		isAbstractMethod.selectedProperty().bindBidirectional(m.abstractProperty());	    			
+		isAbstractMethod.selectedProperty().bindBidirectional(m.abstractProperty());	 
+		isAbstractMethod.setDisable(true);
 		
 		ComboBox<Visibility> cmbVisibility = new ComboBox<Visibility>();
 		cmbVisibility.getItems().setAll(Visibility.values());
 		cmbVisibility.getSelectionModel().select(m.getVisibility());
+		cmbVisibility.setDisable(true);
 		
-		cmbVisibility.valueProperty().addListener(new ChangeListener<Visibility>(){
-			@Override
-			public void changed(ObservableValue<? extends Visibility> o, Visibility oldVal, Visibility newVal) {												
-				m.setVisibility(newVal);							
-			}
-	      });
 		
 		ComboBox<DataType> cmbReturnType = new ComboBox<DataType>();
 		cmbReturnType.getItems().setAll(DataType.values());
@@ -293,7 +286,7 @@ public class ClassInspectorController implements Initializable {
 	}
 	
 	
-	public void populateGeneralData(UMLClass newVal) {
+	public void populateGeneralData(UMLInterface newVal) {
 		CbVisibility.getItems().setAll(Visibility.values());
 		CbVisibility.getSelectionModel().select(newVal.getVisibility());
 		
@@ -308,15 +301,15 @@ public class ClassInspectorController implements Initializable {
 	
 	
 	//Getters & Setters	
-	public ObjectProperty<UMLClass> inspectedClassProperty() {
-		return inspectedClass;
+	public ObjectProperty<UMLInterface> inspectedInterfaceProperty() {
+		return inspectedInterface;
 	}	
 	
-	public UMLClass getInspectedClass() {
-		return inspectedClass.get();
+	public UMLInterface getInspectedInterface() {
+		return inspectedInterface.get();
 	}	
 	
-	public void setInspectedClass(UMLClass inspectedClass) {	
-		this.inspectedClass.set(inspectedClass);			
+	public void setInspectedInterface(UMLInterface inspectedInterface) {	
+		this.inspectedInterface.set(inspectedInterface);			
 	}
 }

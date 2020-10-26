@@ -1,6 +1,7 @@
 package model;
 
 import application.ClassInspectorController;
+import application.InterfaceInspectorController;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,7 +15,8 @@ public class SelectionHandler {
 	private SimpleObjectProperty<SelectableNode> selectedNode = new SimpleObjectProperty<SelectableNode>();
 	
 	private Pane InspectorPane;
-	private ClassInspectorController inspectorController;
+	private ClassInspectorController classInspectorController;
+	private InterfaceInspectorController interfaceInspectorController;
 	
 	public SelectionHandler(Pane root, Pane inspectorPane) {
 		this.InspectorPane = inspectorPane;
@@ -42,23 +44,36 @@ public class SelectionHandler {
 		selectedNode.addListener(new ChangeListener<SelectableNode>() {
 			@Override
 			public void changed(ObservableValue<? extends SelectableNode> observable, SelectableNode oldValue, SelectableNode newValue) {
+				InspectorPane.getChildren().clear();			
+				
+				
 				String inspectorFxml = "";
 				
 				if(newValue instanceof UMLClass) {
-					inspectorFxml = "/view/ClassInspector_new.fxml";											
-				}									
+					inspectorFxml = "/view/ClassInspector.fxml";					
 					
-				
-				InspectorPane.getChildren().clear();
-				 
-				try {		
-					FXMLLoader loader = new FXMLLoader(getClass().getResource(inspectorFxml));	
-					InspectorPane.getChildren().add(loader.load());	
-					inspectorController = loader.getController();					
-				}
-				catch(Exception e) { System.out.println(e.getMessage()); }					
-				
-				inspectorController.setInspectedClass(((UMLClass)newValue));					
+					try {		
+						FXMLLoader loader = new FXMLLoader(getClass().getResource(inspectorFxml));	
+						InspectorPane.getChildren().add(loader.load());	
+						classInspectorController = loader.getController();					
+					}
+					catch(Exception e) { System.out.println(e.getMessage()); }		
+					
+					classInspectorController.setInspectedClass(((UMLClass)newValue));
+					
+				}	
+				else if(newValue instanceof UMLInterface) {
+					inspectorFxml = "/view/InterfaceInspector.fxml";					
+					
+					try {		
+						FXMLLoader loader = new FXMLLoader(getClass().getResource(inspectorFxml));	
+						InspectorPane.getChildren().add(loader.load());	
+						interfaceInspectorController = loader.getController();					
+					}
+					catch(Exception e) { System.out.println(e.getMessage()); }		
+					
+					interfaceInspectorController.setInspectedInterface(((UMLInterface)newValue));
+				}							
 			}
 			
 		});
