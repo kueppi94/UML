@@ -18,7 +18,7 @@ public class SelectionHandler {
 	private ClassInspectorController classInspectorController;
 	private InterfaceInspectorController interfaceInspectorController;
 	
-	public SelectionHandler(Pane root, Pane inspectorPane) {
+	public SelectionHandler(Pane root, Pane inspectorPane) {		
 		this.InspectorPane = inspectorPane;
 		
 		root.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -77,5 +77,9 @@ public class SelectionHandler {
 			}
 			
 		});
-	}		
+	}	
+	
+	public SelectableNode getSelectedNode() {
+		return selectedNode.get();
+	}
 }

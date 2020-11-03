@@ -6,8 +6,10 @@ import java.util.List;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ListProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -33,7 +35,9 @@ public class UMLClass extends Entity {
 	private static final int ABSTRACT_ID = 1;	
 	private static final String ABSTRACT_TEXT = "{abstract}";
 	
+	private ObjectProperty<UMLClass> superclassProperty = new SimpleObjectProperty<UMLClass>();
 	
+
 	public UMLClass(String className) {
 		super(className);			
 	}	
@@ -65,5 +69,14 @@ public class UMLClass extends Entity {
 	@Override
 	public void setMethod(int mid, Method method) {
 		methods.set(mid, method);
+	}
+	
+	
+	public UMLClass getSuperclass() {
+		return superclassProperty.get();
+	}
+
+	public void setSuperclass(UMLClass superclass) {
+		this.superclassProperty.set(superclass);
 	}
 }

@@ -31,6 +31,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -46,6 +47,9 @@ import model.UMLInterface;
 import model.Visibility;
 
 public class InterfaceInspectorController implements Initializable {
+	@FXML
+	private VBox InterfaceInspector;
+	
 	@FXML
 	private final ObjectProperty<UMLInterface> inspectedInterface = new SimpleObjectProperty<UMLInterface>(null);	
 	
@@ -293,6 +297,14 @@ public class InterfaceInspectorController implements Initializable {
 		//aktualisiere Name und Abstract-Wert
 		Name.textProperty().bindBidirectional(newVal.entityNameProperty());	
 		IsAbstract.selectedProperty().bindBidirectional(newVal.abstractProperty());	  
+	}
+	
+	public void delete() {
+		Pane canvas = (Pane)inspectedInterface.get().getParent();
+		
+		canvas.getChildren().remove(inspectedInterface.get());
+		
+		InterfaceInspector.getChildren().clear();		
 	}
 	
 	

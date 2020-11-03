@@ -19,22 +19,33 @@ public class UMLInterface extends Entity {
 
 	@Override
 	public boolean addProperty(Property property) {
-		return properties.add(new Property(Visibility.PUBLIC, property.getName(), property.getDataType()));	
+		property.setVisibility(Visibility.PUBLIC);
+		
+		return properties.add(property);	
 	}
 
 	@Override
 	public void setProperty(int pid, Property property) {
-		properties.set(pid, new Property(Visibility.PUBLIC, property.getName(), property.getDataType()));		
+		property.setVisibility(Visibility.PUBLIC);
+		
+		properties.set(pid, property);		
 		
 	}
 
 	@Override
 	public boolean addMethod(Method method) {
-		return methods.add(new Method(Visibility.PUBLIC, true, method.getName(), method.parameterProperty(), method.getReturnType()));	
+		method.setVisibility(Visibility.PUBLIC);
+		method.setAbstract(true);
+		
+		
+		return methods.add(method);	
 	}
 
 	@Override
 	public void setMethod(int mid, Method method) {
-		methods.set(mid, new Method(Visibility.PUBLIC, true, method.getName(), method.parameterProperty(), method.getReturnType()));	
+		method.setVisibility(Visibility.PUBLIC);
+		method.setAbstract(true);
+		
+		methods.set(mid, method);	
 	}	
 }

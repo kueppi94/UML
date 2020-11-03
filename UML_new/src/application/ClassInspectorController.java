@@ -31,6 +31,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -45,6 +46,9 @@ import model.UMLClass;
 import model.Visibility;
 
 public class ClassInspectorController implements Initializable {
+	@FXML
+	private VBox ClassInspector;
+	
 	@FXML
 	private final ObjectProperty<UMLClass> inspectedClass = new SimpleObjectProperty<UMLClass>(null);	
 	
@@ -303,6 +307,15 @@ public class ClassInspectorController implements Initializable {
 	}
 	
 	
+	public void delete() {
+		Pane canvas = (Pane)inspectedClass.get().getParent();
+		
+		canvas.getChildren().remove(inspectedClass.get());
+		
+		ClassInspector.getChildren().clear();
+		
+		
+	}
 	
 	
 	

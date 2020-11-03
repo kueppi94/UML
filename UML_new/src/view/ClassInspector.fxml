@@ -14,14 +14,25 @@
 
 
 <VBox fx:id="ClassInspector" layoutX="123.0" layoutY="118.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.ClassInspectorController">
+   <children>  
+   <VBox alignment="TOP_RIGHT">
    <children>
+      <Button onAction="#delete" mnemonicParsing="false" text="Löschen">
+         <VBox.margin>
+            <Insets right="10.0" top="10.0" />
+         </VBox.margin>
+      </Button>
+   </children>
+	</VBox>
+         
+    
       <HBox spacing="10.0">
          <children>
          	<Label text="Sichtbarkeit:" />
             <ComboBox fx:id="CbVisibility" />
          
             <Label text="Name:" />
-            <TextField fx:id="Name" />            
+            <TextField fx:id="Name" />                
          </children>
          <VBox.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

@@ -20,43 +20,35 @@
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="Projekt">
           <items>
-            <MenuItem mnemonicParsing="false" text="New" />
-            <MenuItem mnemonicParsing="false" text="Open…" />
-            <Menu mnemonicParsing="false" text="Open Recent" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Close" />
-            <MenuItem mnemonicParsing="false" text="Save" />
-            <MenuItem mnemonicParsing="false" text="Save As…" />
-            <MenuItem mnemonicParsing="false" text="Revert" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Preferences…" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+          	<Menu mnemonicParsing="false" text="Laden">
+          		<MenuItem fx:id="loadJavaProject" mnemonicParsing="false" text="Java Projekt"  />
+          	</Menu>
+          
+          	<Menu mnemonicParsing="false" text="Speichern als...">
+          		<MenuItem fx:id="saveAsJavaProject" mnemonicParsing="false" text="Java Projekt"  />
+          	</Menu>             
           </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Edit">
-          <items>
-            <MenuItem mnemonicParsing="false" text="Undo" />
-            <MenuItem mnemonicParsing="false" text="Redo" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Cut" />
-            <MenuItem mnemonicParsing="false" text="Copy" />
-            <MenuItem mnemonicParsing="false" text="Paste" />
-            <MenuItem mnemonicParsing="false" text="Delete" />
-            <SeparatorMenuItem mnemonicParsing="false" />
-            <MenuItem mnemonicParsing="false" text="Select All" />
-            <MenuItem mnemonicParsing="false" text="Unselect All" />
-          </items>
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-          <items>
-            <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
-          </items>
-        </Menu>
+          
+        </Menu>        
+      
       </menus>
     </MenuBar>
+    <HBox prefHeight="130.0" minHeight="130.0" prefWidth="900.0" spacing="10" alignment="CENTER_LEFT" >
+    <children>
+    	<Button fx:id="NewUMLClassButton" ></Button>
+    	<Button fx:id="NewUMLInterfaceButton" ></Button>   
+    	<Button fx:id="NewInheritanceButton"></Button> 
+    </children>
+    <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+    
+    </HBox>
     <SplitPane dividerPositions="0.18596881959910913, 0.7271714922048997" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
         <AnchorPane>

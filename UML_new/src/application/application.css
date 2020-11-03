@@ -34,3 +34,10 @@
     -fx-spacing: 10px;
     -fx-padding: 0 0 3 0px;
 }
+
+
+#account-button .ikonli-font-icon {
+    -fx-icon-code: "mdi-account";
+    -fx-icon-color: blue;
+    -fx-icon-size: 1.2em;
+}

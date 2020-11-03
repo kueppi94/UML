@@ -35,25 +35,25 @@ public abstract class CodeGenerator {
 	
 	public abstract String getMethodCode(model.Method method);
 	
-	public abstract String getClassCode(UMLClass umlClass);
+	public abstract String getEntityCode(Entity umlEntity);
 	
-	public void saveClassToFile() throws FileNotFoundException {
+	public void saveAllClasses() throws FileNotFoundException {
 		ObservableList<Node> nodes = canvas.getChildren();
 		
 		for(Node entity : nodes) {
-			if(!(entity instanceof UMLClass))
+			if(!(entity instanceof UMLClass || entity instanceof UMLInterface))
 				continue;
 			
-			UMLClass umlClass = (UMLClass)entity;
+			Entity umlEntity = (Entity)entity;
 			
-			String classCode = getClassCode(umlClass);	
+			String entityCode = getEntityCode(umlEntity);	
 			
-			PrintWriter out = new PrintWriter(outputDir + "\\" + umlClass.entityNameProperty().get() + ext);
+			PrintWriter out = new PrintWriter(outputDir + "\\" + umlEntity.entityNameProperty().get() + ext);
 			
-			out.println(classCode);
+			out.println(entityCode);
 			
 			out.close();
 			
-		}
+		}		
 	}
 }
