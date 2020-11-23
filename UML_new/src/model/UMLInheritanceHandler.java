@@ -4,6 +4,9 @@ import java.util.List;
 
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
 
 public class UMLInheritanceHandler {
 	
@@ -38,18 +41,15 @@ public class UMLInheritanceHandler {
 		else
 			end = superclass.topConnection;	
 		
-		return new ConnectionLine(start, end);			
+		//Kindklasse ist start, Elternklasse ist end
+		ConnectionLine line = new ConnectionLine(start, end);
+		
+		line.add(new Polygon(10.0, 20.0,
+			    20.0, 0.0,
+			    0.0, 0.0));
+		
+		return line;
 	}
-	
-	
-	//Hilfsklasse
-	private static final class DragContext {		
-	    public double mouseAnchorX;
-	    public double mouseAnchorY;
-	    public double initialTranslateX;
-	    public double initialTranslateY;
-	}
-
 }
 
 

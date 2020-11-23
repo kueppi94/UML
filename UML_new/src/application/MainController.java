@@ -143,14 +143,12 @@ public class MainController {
 				UMLClass subclass = userInput.get().getValue();
 				
 				
-				new UMLInheritanceHandler(superclass, subclass).connect();
+				Node connection = new UMLInheritanceHandler(superclass, subclass).connect();
 				
 				
-				subclass.setSuperclass(superclass);
+				subclass.setSuperclass(superclass);								
 				
-				ConnectionLine line = new ConnectionLine(superclass.getTopConnection(), subclass.getBotConnection());
-				
-				Content.getChildren().add(line);				
+				Content.getChildren().add(connection);				
 			}			
 		});
 		
