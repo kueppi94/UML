@@ -17,11 +17,6 @@
 	-fx-font-style: italic;
 }
 
-.connectionLine:hover {
-	-fx-stroke-width: 5px;
-	-fx-stroke: BLUE;
-}
-
 .connectionBox {
 	 -fx-opacity: 0;
 }

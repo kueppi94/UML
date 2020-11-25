@@ -1,7 +1,12 @@
 package model;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
+import javafx.geometry.Bounds;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
@@ -13,8 +18,11 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.VLineTo;
 
 public class ConnectionLine extends javafx.scene.Group {
-	private ConnectionBox start; 
-	private ConnectionBox end;
+	protected Entity start; 
+	protected Entity end;
+	
+	private ConnectionBox startBox;
+	private ConnectionBox endBox;
 	
 	private Path path = new Path();
 	private MoveTo startpoint = new MoveTo();
@@ -23,68 +31,164 @@ public class ConnectionLine extends javafx.scene.Group {
 	
 	private Circle positionChanger = new Circle(15);
 	
-	public ConnectionLine(ConnectionBox start, ConnectionBox end) {
+	
+	private SimpleDoubleProperty minXProperty = new SimpleDoubleProperty();
+	private SimpleDoubleProperty maxXProperty = new SimpleDoubleProperty();
+	private SimpleDoubleProperty minYProperty = new SimpleDoubleProperty();
+	private SimpleDoubleProperty maxYProperty = new SimpleDoubleProperty();
+	
+	public ConnectionLine(Entity start, Entity end) {				
 		this.start = start;
-		this.end = end;			
+		this.end = end;				
 		
-		startpoint.xProperty().bind(this.start.translateXProperty());
-		startpoint.yProperty().bind(this.start.translateYProperty());				
+		startBox = start.leftConnection;
+		endBox = end.topConnection;
 		
-		positionChanger.setOnMouseClicked(connectionLineOnMousePressedEventHandler);
-		positionChanger.setOnMouseDragged(connectionLineOnMouseDraggedEventHandler);		
+		
+		//Setze Maximal- und Minimalwerte für das Verschieben der Verbindungslinie			
+		minXProperty.bind(endBox.translateXProperty());		
+		maxXProperty.bind(Bindings.add(endBox.translateXProperty(), endBox.widthProperty()));
+		minYProperty.bind(startBox.translateYProperty());
+		maxYProperty.bind(Bindings.add(startBox.translateYProperty(), startBox.heightProperty()));		
+		
+		startpoint.xProperty().bind(this.startBox.translateXProperty());
+		startpoint.yProperty().bind(this.startBox.translateYProperty());				
+		
+		positionChanger.setOnMouseClicked(positionChangerOnMousePressedEventHandler);
+		positionChanger.setOnMouseDragged(positionChangerOnMouseDraggedEventHandler);		
 		
 		path.getElements().addAll(startpoint, hLine, vLine);			
 		
-		positionChanger.setCenterX(end.getTranslateX());
-		positionChanger.setCenterY(start.getTranslateY());
+		positionChanger.setCenterX(endBox.getTranslateX());
+		positionChanger.setCenterY(startBox.getTranslateY());
 		
+		
+		startpoint.yProperty().bind(positionChanger.centerYProperty());		
 		hLine.xProperty().bind(this.positionChanger.centerXProperty());
-		vLine.yProperty().bind(end.translateYProperty());			
-		
-		getChildren().addAll(path, positionChanger);
+		vLine.yProperty().bind(endBox.translateYProperty());			
 		
 		
-		path.getStyleClass().add(Style.CONNECTIONLINE.css());		
+		//positionChanger
+		
+		
+		
+		
+		start.setOnMousePressed(entityOnMousePressedEventHandler);
+		start.setOnMouseDragged(entityOnMouseDraggedEventHandler);
+		
+		end.setOnMousePressed(entityOnMousePressedEventHandler);
+		end.setOnMouseDragged(entityOnMouseDraggedEventHandler);
+		
+		
+		getChildren().addAll(path, positionChanger);			
 	}	
 	
 	
 	/*
 	 * Bindet am Ende der Verbindungslinie ein Node-Element ein.
+	 * Size wird genutzt, um die Linie mittig zu platzieren.
 	 */
-	public void add(Node node) {			
-		node.translateXProperty().bind(end.translateXProperty());
-		node.translateYProperty().bind(end.translateYProperty());			
+	public void add(Node node, double size) {			
+		node.translateXProperty().bind(Bindings.subtract(hLine.xProperty(), size));
+		node.translateYProperty().bind(vLine.yProperty());			
 		
 		getChildren().add(node);
 	}
 	
 	
-	final DragContext dragContext = new DragContext();
+	//Verschiebt den Kreis für die Positionsänderung der Verbindungslinien
+	final DragContext dragContextPC = new DragContext();
 	
-	EventHandler<MouseEvent> connectionLineOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+	EventHandler<MouseEvent> positionChangerOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent t) {
-			dragContext.mouseAnchorX = t.getX();
-            dragContext.mouseAnchorY = t.getY();
-            dragContext.initialTranslateX =
+			dragContextPC.mouseAnchorX = t.getX();
+            dragContextPC.mouseAnchorY = t.getY();
+            dragContextPC.initialTranslateX =
                 positionChanger.getCenterX();
-            dragContext.initialTranslateY =
+            dragContextPC.initialTranslateY =
             	positionChanger.getCenterY();	                		
 		}
 	};
 	
-	EventHandler<MouseEvent> connectionLineOnMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
+	EventHandler<MouseEvent> positionChangerOnMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent t) {
-			double newTranslateX = dragContext.initialTranslateX + t.getX() - dragContext.mouseAnchorX;
-        	double newTranslateY = dragContext.initialTranslateY + t.getY() - dragContext.mouseAnchorY;
+			double newTranslateX = dragContextPC.initialTranslateX + t.getX() - dragContextPC.mouseAnchorX;
+        	double newTranslateY = dragContextPC.initialTranslateY + t.getY() - dragContextPC.mouseAnchorY;
         	
-        	positionChanger.setCenterX(newTranslateX);
-        	positionChanger.setCenterY(newTranslateY);
+        	if(newTranslateX >= minXProperty.get() && newTranslateX <= maxXProperty.get())
+        		positionChanger.setCenterX(newTranslateX);
+        	if(newTranslateY >= minYProperty.get() && newTranslateY <= maxYProperty.get())
+        		positionChanger.setCenterY(newTranslateY);
 		}
 	};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	final DragContext dragContextEntity = new DragContext();
+	private Entity clickedEntity;
+	
+	//sorgt dafür, dass die Verbindungslinien auch mit den Entitäten verschoben werden. 
+	//Dafür muss aber der Kreis, an den die Linien gebunden sind verschoben werden.
+	EventHandler<MouseEvent> entityOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent t) {
+			Node clickedNode = (Node)t.getTarget();
+			
+			while(!(clickedNode instanceof Entity)) {
+				clickedNode = clickedNode.getParent();				
+			}
+			
+			clickedEntity = (Entity)clickedNode;
+			
+			dragContextEntity.mouseAnchorX = t.getX();
+			dragContextEntity.mouseAnchorY = t.getY();
+			dragContextEntity.initialTranslateX =
+                positionChanger.getCenterX();
+			dragContextEntity.initialTranslateY =
+            	positionChanger.getCenterY();	 
+		}
+	};
+	
+	EventHandler<MouseEvent> entityOnMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
+
+		@Override
+		public void handle(MouseEvent t) {
+			double newTranslateX = dragContextEntity.initialTranslateX + t.getX() - dragContextEntity.mouseAnchorX;
+        	double newTranslateY = dragContextEntity.initialTranslateY + t.getY() - dragContextEntity.mouseAnchorY;
+        	
+        	if(clickedEntity.equals(start)) {
+        		if(newTranslateX >= minXProperty.get() && newTranslateX <= maxXProperty.get())
+            		positionChanger.setCenterX(newTranslateX);
+        		
+        		positionChanger.setCenterY(newTranslateY);
+        	}
+        	else {
+        		if(newTranslateY >= minYProperty.get() && newTranslateY <= maxYProperty.get())
+            		positionChanger.setCenterY(newTranslateY);
+        		
+        		positionChanger.setCenterX(newTranslateX);
+        	}
+        	
+        	
+        	
+        	//positionChanger.setCenterX(newTranslateX);
+        	//positionChanger.setCenterY(newTranslateY);       	
+        	
+		}
+	};
+	
+	
 	
 	
 	private static final class DragContext {		

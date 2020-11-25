@@ -23,6 +23,8 @@ public class ConnectionBox extends javafx.scene.shape.Rectangle {
 	
 	private VBox parent;
 	private String position;	
+	private double size = 20;
+	
 	
 	public ConnectionBox(VBox parent, String position) {	
 		this.parent = parent;
@@ -31,10 +33,10 @@ public class ConnectionBox extends javafx.scene.shape.Rectangle {
 		//Größe bestimmen
 		if(position.equals(TOP)|| position.equals(BOTTOM)) {
 			widthProperty().bind(parent.widthProperty());
-			setHeight(10);
+			setHeight(size);
 		}
 		else {
-			setWidth(10);
+			setWidth(size);
 			heightProperty().bind(parent.heightProperty());
 		}
 		

@@ -1,54 +1,42 @@
 package model;
 
+import java.awt.Paint;
 import java.util.List;
 
 import javafx.geometry.Bounds;
 import javafx.scene.Node;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
-public class UMLInheritanceHandler {
+public class UMLInheritanceHandler extends ConnectionLine {
 	
-	UMLClass superclass;
-	UMLClass subclass;
+	//UMLClass superclass;
+	//UMLClass subclass;
 	
 	public UMLInheritanceHandler(UMLClass superclass, UMLClass subclass) {
-		this.superclass = superclass;
-		this.subclass = subclass;		
+		super(subclass, superclass);
 		
-		this.subclass.setSuperclass(superclass);
+		subclass.setSuperclass(superclass);
 	}
 	
 	
 	/*
 	 * Erstellt die notwendigen Komponenten für die Zeichnungsfläche und gibt diese zurück.	 
 	 */
-	public Node connect(){		
-		Bounds superBounds = superclass.localToScene(superclass.getBoundsInLocal());
-		Bounds subBounds = subclass.localToScene(subclass.getBoundsInLocal());
+	public Node connect(){				
+		Polygon triangle = new Polygon(15.0, 20.0,
+			    30.0, 0.0,
+			    0.0, 0.0);
 		
-		ConnectionBox start;
-		ConnectionBox end;		
+		triangle.setFill(Color.WHITE);			
+		triangle.setStroke(Color.BLACK);
+		triangle.setStrokeWidth(3.0);
 		
-		if(subBounds.getMinX() <= superBounds.getMinX())		
-			start = subclass.rightConnection;					
-		else
-			start = subclass.leftConnection;			
+		this.add(triangle, 15);
 		
-		if(subBounds.getMinY() <= superBounds.getMinY())
-			end = superclass.botConnection;			
-		else
-			end = superclass.topConnection;	
-		
-		//Kindklasse ist start, Elternklasse ist end
-		ConnectionLine line = new ConnectionLine(start, end);
-		
-		line.add(new Polygon(10.0, 20.0,
-			    20.0, 0.0,
-			    0.0, 0.0));
-		
-		return line;
+		return this;
 	}
 }
 
