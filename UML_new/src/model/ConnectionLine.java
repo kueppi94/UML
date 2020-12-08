@@ -37,7 +37,10 @@ public class ConnectionLine extends javafx.scene.Group {
 	private SimpleDoubleProperty minYProperty = new SimpleDoubleProperty();
 	private SimpleDoubleProperty maxYProperty = new SimpleDoubleProperty();
 	
-	public ConnectionLine(Entity start, Entity end) {				
+	public ConnectionLine(Entity start, Entity end) {		
+		if(start == null || end == null)
+			return;
+		
 		this.start = start;
 		this.end = end;				
 		
@@ -66,19 +69,13 @@ public class ConnectionLine extends javafx.scene.Group {
 		startpoint.yProperty().bind(positionChanger.centerYProperty());		
 		hLine.xProperty().bind(this.positionChanger.centerXProperty());
 		vLine.yProperty().bind(endBox.translateYProperty());			
-		
-		
-		//positionChanger
-		
-		
-		
+				
 		
 		start.setOnMousePressed(entityOnMousePressedEventHandler);
 		start.setOnMouseDragged(entityOnMouseDraggedEventHandler);
 		
 		end.setOnMousePressed(entityOnMousePressedEventHandler);
-		end.setOnMouseDragged(entityOnMouseDraggedEventHandler);
-		
+		end.setOnMouseDragged(entityOnMouseDraggedEventHandler);		
 		
 		getChildren().addAll(path, positionChanger);			
 	}	
@@ -94,6 +91,9 @@ public class ConnectionLine extends javafx.scene.Group {
 		
 		getChildren().add(node);
 	}
+	
+	
+	
 	
 	
 	//Verschiebt den Kreis für die Positionsänderung der Verbindungslinien

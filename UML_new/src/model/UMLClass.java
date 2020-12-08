@@ -35,6 +35,8 @@ public class UMLClass extends Entity {
 	private static final int ABSTRACT_ID = 1;	
 	private static final String ABSTRACT_TEXT = "{abstract}";
 	
+	private ObjectProperty<UMLInheritanceHandler> inheritanceProperty = new SimpleObjectProperty<UMLInheritanceHandler>();		
+
 	private ObjectProperty<UMLClass> superclassProperty = new SimpleObjectProperty<UMLClass>();
 	
 
@@ -77,6 +79,28 @@ public class UMLClass extends Entity {
 	}
 
 	public void setSuperclass(UMLClass superclass) {
-		this.superclassProperty.set(superclass);
+		this.superclassProperty.set(superclass);			
+	}
+	
+	public ObjectProperty<UMLInheritanceHandler> getInheritanceProperty() {
+		return inheritanceProperty;
+	}
+	
+	public UMLInheritanceHandler getInheritance() {
+		return inheritanceProperty.get();
+	}
+	
+	public void setInheritance(UMLInheritanceHandler inheritance) {
+		Pane parent = (Pane)this.getParent();
+		
+		UMLInheritanceHandler inheritanceOld = inheritanceProperty.get();
+		
+		if(inheritanceOld != null)
+			parent.getChildren().remove(inheritanceOld);
+		
+		inheritanceProperty.set(inheritance);
+		
+		if(inheritance.getSuperClass() != null)
+			parent.getChildren().add(inheritance);
 	}
 }

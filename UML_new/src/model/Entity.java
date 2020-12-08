@@ -31,7 +31,7 @@ public abstract class Entity extends javafx.scene.Group implements SelectableNod
 	protected SimpleListProperty<Property> properties = new SimpleListProperty<Property>(FXCollections.observableArrayList());
 	
 	protected SimpleListProperty<Method> methods = new SimpleListProperty<Method>(FXCollections.observableArrayList());
-		
+	
 	//Verbindungspunkte für Beziehungen zwischen Entitäten
 	protected ConnectionBox topConnection;
 	protected ConnectionBox botConnection;

@@ -10,22 +10,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
-public class UMLInheritanceHandler extends ConnectionLine {
-	
-	//UMLClass superclass;
-	//UMLClass subclass;
-	
+public class UMLInheritanceHandler extends ConnectionLine {	
 	public UMLInheritanceHandler(UMLClass superclass, UMLClass subclass) {
 		super(subclass, superclass);
 		
 		subclass.setSuperclass(superclass);
-	}
-	
-	
-	/*
-	 * Erstellt die notwendigen Komponenten für die Zeichnungsfläche und gibt diese zurück.	 
-	 */
-	public Node connect(){				
+		
 		Polygon triangle = new Polygon(15.0, 20.0,
 			    30.0, 0.0,
 			    0.0, 0.0);
@@ -35,8 +25,14 @@ public class UMLInheritanceHandler extends ConnectionLine {
 		triangle.setStrokeWidth(3.0);
 		
 		this.add(triangle, 15);
-		
-		return this;
+	}
+	
+	public UMLClass getSuperClass() {
+		return (UMLClass)start;
+	}
+	
+	public UMLClass getSubClass() {
+		return (UMLClass)end;
 	}
 }
 

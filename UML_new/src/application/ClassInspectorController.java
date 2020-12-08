@@ -4,6 +4,8 @@ package application;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javax.swing.text.html.HTMLDocument.HTMLReader.IsindexAction;
+
 import javafx.beans.property.ListProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleListProperty;
@@ -30,6 +32,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -43,11 +46,14 @@ import model.Property;
 import model.SelectableNode;
 import model.Style;
 import model.UMLClass;
+import model.UMLInheritanceHandler;
 import model.Visibility;
 
 public class ClassInspectorController implements Initializable {
 	@FXML
-	private VBox ClassInspector;
+	private VBox ClassInspector;	
+	
+	private AnchorPane Content;
 	
 	@FXML
 	private final ObjectProperty<UMLClass> inspectedClass = new SimpleObjectProperty<UMLClass>(null);	
@@ -59,6 +65,9 @@ public class ClassInspectorController implements Initializable {
 		
 	@FXML
 	private ComboBox<Visibility> CbVisibility;
+	
+	@FXML
+	private ComboBox<String> CbSuperclass;
 	
 	@FXML
 	private TextField Name;
@@ -73,8 +82,51 @@ public class ClassInspectorController implements Initializable {
 	@FXML
 	private Button NewMethod;
 	
+	public void initData(AnchorPane content) {
+		this.Content = content;
+		
+		CbSuperclass.getItems().add(null);
+		for(Node node : Content.getChildren()) {
+			if(node instanceof UMLClass && ! ((UMLClass) node).entityNameProperty().get().equals(inspectedClass.get().entityNameProperty().get())) {
+				UMLClass umlClass = (UMLClass) node;
+				CbSuperclass.getItems().add(umlClass.entityNameProperty().get());
+			}	
+			
+		UMLClass superclass = inspectedClass.get().getSuperclass();		
+			
+		if(superclass != null)
+			CbSuperclass.getSelectionModel().select(superclass.entityNameProperty().get());
+		
+		
+		
+		CbSuperclass.valueProperty().addListener(new ChangeListener<String>(){
+			@Override
+			public void changed(ObservableValue<? extends String> o, String oldVal, String newVal) {		
+				//Keine Elternklasse ausgewählt.
+				if(newVal == null) {					
+					inspectedClass.get().setInheritance(new UMLInheritanceHandler(null, inspectedClass.get()));
+					
+					
+					
+					return;
+				}
+				
+				
+				UMLClass newSuperClass = null;
+				
+				for(Node node : Content.getChildren()) {
+					if(node instanceof UMLClass && ((UMLClass) node).entityNameProperty().get().equals(newVal))
+						newSuperClass = (UMLClass)node;
+				}
+				
+				inspectedClass.get().setInheritance(new UMLInheritanceHandler(newSuperClass, inspectedClass.get()));
+			}
+	      });
+				
+		}
+	}
 	 
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL location, ResourceBundle resources) {		
 		newPropertyButtonAction();	
 		newMethodButtonAction();
 		
@@ -299,7 +351,7 @@ public class ClassInspectorController implements Initializable {
 	
 	public void populateGeneralData(UMLClass newVal) {
 		CbVisibility.getItems().setAll(Visibility.values());
-		CbVisibility.getSelectionModel().select(newVal.getVisibility());
+		CbVisibility.getSelectionModel().select(newVal.getVisibility());		
 		
 		//aktualisiere Name und Abstract-Wert
 		Name.textProperty().bindBidirectional(newVal.entityNameProperty());	
@@ -331,5 +383,9 @@ public class ClassInspectorController implements Initializable {
 	
 	public void setInspectedClass(UMLClass inspectedClass) {	
 		this.inspectedClass.set(inspectedClass);			
+	}
+	
+	public void setContent(AnchorPane content) {
+		Content = content;
 	}
 }

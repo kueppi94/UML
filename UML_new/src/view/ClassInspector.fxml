@@ -43,11 +43,14 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </VBox.margin>
          <children>
+         	<Label text="Elternklasse" />            
+            <ComboBox fx:id="CbSuperclass" />
+         
             <CheckBox fx:id="IsAbstract" mnemonicParsing="false" text="Abstrakt?">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
-            </CheckBox>
+            </CheckBox>            
          </children>
       </HBox>
       <Accordion expandedPane="$PropertyPane">

@@ -87,11 +87,8 @@ public class MainController {
 	@FXML
 	private MenuItem saveAsJavaProject;
 	
-	private SelectionHandler test;
-	
-	
 	public void initialize() {	
-		test = new SelectionHandler(Content, InspectorPane);
+		new SelectionHandler(Content, InspectorPane);
 		
 		 buttonCreationHelper(NewUMLClassButton, "/images/Class.PNG");
 		 buttonCreationHelper(NewUMLInterfaceButton, "/images/Interface.PNG");		
@@ -132,23 +129,16 @@ public class MainController {
 				Optional<Pair<UMLClass, UMLClass>> userInput =  showInheritanceDialog();			
 				
 				if(userInput == null)
-					return;
-				
-				
-				
-				
-				
+					return;				
 				
 				UMLClass superclass = userInput.get().getKey();
 				UMLClass subclass = userInput.get().getValue();
 				
+			 	UMLInheritanceHandler inheritance = new UMLInheritanceHandler(superclass, subclass);				
+			 	
+				subclass.setInheritance(inheritance);				
 				
-				Node connection = new UMLInheritanceHandler(superclass, subclass).connect();
-				
-				
-				subclass.setSuperclass(superclass);								
-				
-				Content.getChildren().add(connection);				
+				subclass.setSuperclass(superclass);									
 			}			
 		});
 		

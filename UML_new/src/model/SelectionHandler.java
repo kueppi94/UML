@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
 public class SelectionHandler {	
@@ -55,11 +56,15 @@ public class SelectionHandler {
 					try {		
 						FXMLLoader loader = new FXMLLoader(getClass().getResource(inspectorFxml));	
 						InspectorPane.getChildren().add(loader.load());	
-						classInspectorController = loader.getController();					
+						classInspectorController = loader.getController();							
 					}
 					catch(Exception e) { System.out.println(e.getMessage()); }		
 					
 					classInspectorController.setInspectedClass(((UMLClass)newValue));
+					
+					Node content = ((UMLClass)selectedNode.get()).getParent();					
+					
+					classInspectorController.initData((AnchorPane)content);
 					
 				}	
 				else if(newValue instanceof UMLInterface) {
