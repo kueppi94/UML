@@ -60,8 +60,13 @@ public class CodeGeneratorJava extends CodeGenerator {
 	public String getEntityCode(Entity umlEntity) {		
 		String entityCode;
 		
-		if(umlEntity instanceof UMLClass)
-			entityCode = String.format("%s %s %s {\n", "public", "class", umlEntity.entityNameProperty().get());
+		if(umlEntity instanceof UMLClass) {
+			UMLClass umlClass = (UMLClass)umlEntity;
+			if(umlClass.getSuperclass() == null)
+				entityCode = String.format("%s %s %s {\n", "public", "class", umlEntity.entityNameProperty().get());
+			else
+				entityCode = String.format("%s %s %s extends %s {\n", "public", "class", umlEntity.entityNameProperty().get(), umlClass.getSuperclass().entityNameProperty().get());
+		}			
 		else
 			entityCode = String.format("%s %s %s {\n", "public", "interface", umlEntity.entityNameProperty().get());
 			

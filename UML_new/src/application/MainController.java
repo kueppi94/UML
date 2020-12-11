@@ -291,8 +291,9 @@ public class MainController {
 	
 	public void test() {
 		
-		
-		
+		CodeLoaderJava n = new CodeLoaderJava(Content, "C://Users//Küppi//Desktop//Test_java_jetzt", ".java");
+		n.getClassFromCode();
+				
 		
 		/*
 		UMLClass uml = ((UMLClass)Content.getChildren().get(0));
