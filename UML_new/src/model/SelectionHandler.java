@@ -12,7 +12,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 
+/*
+ * Bindet einen "Inspector-Panel" dynamisch ein. Dieser ermöglicht es die Werte der UML-Klassen &
+ * UML-Interfaces zu ändern.
+ * Abhängig von der ausgewählten Node (zurzeit nur UMLClass oder UMLInterface) wird das dazugehörige "Inspector-Panel"
+ * angezeigt.
+ */
+
+
 public class SelectionHandler {	
+	//Node, dessen Werte geändert werden sollen
 	private SimpleObjectProperty<SelectableNode> selectedNode = new SimpleObjectProperty<SelectableNode>();
 	
 	private Pane InspectorPane;
@@ -25,9 +34,7 @@ public class SelectionHandler {
 		root.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent mouseEvent) {					
-				Node target = (Node) mouseEvent.getTarget();
-				
-				System.out.println(target);
+				Node target = (Node) mouseEvent.getTarget();								
 				
 				while(!(target instanceof SelectableNode) && !target.equals(root)) 					
 					target = target.getParent();

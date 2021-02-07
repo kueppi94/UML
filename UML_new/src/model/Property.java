@@ -8,6 +8,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 
 /*
+ * Node für Eigenschaften von Klassen und Interfaces
  * Aus UML-Sicht ist die "Eigenschaft" nur ein Parameter mit Sichtbarkeit.
  * Daher erbt Property von Parameter
  */
@@ -16,6 +17,12 @@ public class Property extends Parameter {
 
 	private ObjectProperty<Visibility> visibilityProperty = new SimpleObjectProperty<Visibility>();	
 	
+	/**
+	 * Erstellt eine HBox für eine Eigenschaft mit den übergebenen Parametern
+	 * @param visibility Sichtbarkeit der Eigenschaft
+	 * @param name Name der Eigenschaft
+	 * @param dataType Datentyp der Eigenschaft
+	 */
 	public Property(Visibility visibility, String name, DataType dataType) {
 		super(name, dataType);				
 		

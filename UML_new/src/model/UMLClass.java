@@ -30,6 +30,18 @@ import javafx.scene.layout.VBox;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
+/*
+ * JavaFX-Node, die eine UML-Klasse representiert.
+ * 
+ * Derzeit werden folgende Funktionen unterstützt:
+ * - Klassennamen ändern
+ * - Klassen als abstrakt kennzeichnen 
+ * - Eigenschaften hinzufügen/ändern/löschen
+ * - Methoden hinzufügen/ändern/löschen und als abstrakt kennzeichnen
+ *   - Paramter für Methoden hinzufügen/ändern/löschen
+ * - Superklassen hinzufügen und löschen
+ */
+
 public class UMLClass extends Entity {	 
 	
 	private static final int ABSTRACT_ID = 1;	
@@ -90,6 +102,9 @@ public class UMLClass extends Entity {
 		return inheritanceProperty.get();
 	}
 	
+	/**
+	 * Erstellt eine Vererbung zwischen zwei Klassen 
+	 */
 	public void setInheritance(UMLInheritanceHandler inheritance) {
 		Pane parent = (Pane)this.getParent();
 		

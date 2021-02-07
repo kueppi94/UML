@@ -23,6 +23,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+/*
+ * Node-Element für das Darstellen von Methoden
+ */
+
 public class Method extends javafx.scene.Group {
 	 
 	private ObjectProperty<Visibility> visibilityProperty = new SimpleObjectProperty<Visibility>();	
@@ -34,6 +38,14 @@ public class Method extends javafx.scene.Group {
 	
 	private SimpleListProperty<Parameter> parameters = new SimpleListProperty<Parameter>(FXCollections.observableArrayList());	
 
+	/**
+	 * Erstellt eine Node für eine Methode mit den übergebenen Parametern
+	 * @param visibility
+	 * @param isAbstract
+	 * @param name
+	 * @param parameters
+	 * @param returnType
+	 */
 	public Method(Visibility visibility, boolean isAbstract, String name, List<Parameter> parameters, DataType returnType) {
 		
 		Node method = createMethodNode(visibility, isAbstract, name, parameters, returnType);		
@@ -116,6 +128,16 @@ public class Method extends javafx.scene.Group {
 		parameters.set(pid, parameter);		
 	}	
 	
+	
+	/**
+	 * Erstellt die Method-Node mit den übergebenen Parametern
+	 * @param visibility
+	 * @param isAbstract
+	 * @param name
+	 * @param parameters
+	 * @param returnType
+	 * @return
+	 */
 	private Node createMethodNode(Visibility visibility, boolean isAbstract, String name, List<Parameter> parameters, DataType returnType) {
 		Label visibilityLabel = new Label();		
 		Label returnTypeLabel = new Label();
@@ -159,6 +181,7 @@ public class Method extends javafx.scene.Group {
 	        }
 	      });			
 		
+		//sorgt dafür, dass Parameter stets durch ein Komma getrennt sind
 		this.parameters.addListener((ListChangeListener<Parameter>) p -> {
 			while(p.next()) {
 				for(int i = 0; i < p.getAddedSize(); i++) {			

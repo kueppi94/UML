@@ -11,11 +11,20 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.Label;
 
+/*
+ * Parameter-Node, welche für die Parameter bei Methoden benutzt wird.
+ */
+
 public class Parameter extends javafx.scene.layout.HBox {
 	private SimpleStringProperty nameProperty = new SimpleStringProperty();
 	
 	private ObjectProperty<DataType> dataTypeProperty = new SimpleObjectProperty<DataType>();		
 	 
+	/**
+	 * Erstellt eine Parameter-HBox mit den entsprechenden Parametern
+	 * @param name Name des Parameters
+	 * @param dataType Datentyp des Parameters
+	 */
 	public Parameter(String name, DataType dataType) {		
 		Label nameLabel = new Label();
 		Label dataTypeLabel = new Label();			

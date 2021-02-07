@@ -5,9 +5,16 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
+/*
+ * Macht beliebe JavaFX-Nodes verschiebbar 
+ * weitere Infos hier: https://docs.oracle.com/javase/8/javafx/events-tutorial/filters.htm#BCFDCCEJ
+ */
 
 public abstract class DraggableNodeFactory {	
 	 
+	/**
+	 * Umgibt die eingehende Node mit einer Group und ermöglicht das verschieben dieser 
+	 */
 	public static Node create(final Node node) {
 	    final DragContext dragContext = new DragContext();
 	    final Group wrapGroup = new Group(node);	    

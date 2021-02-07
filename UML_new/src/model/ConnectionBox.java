@@ -14,6 +14,10 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
+/*
+ * Diese Klasse dient als Verbindungs-"Punkt" für Verbindungen zwischen Entitäten (bspw. Vererbung)
+ */
+
 public class ConnectionBox extends javafx.scene.shape.Rectangle {
 
 	public static final String TOP = "top"; 
@@ -71,30 +75,13 @@ public class ConnectionBox extends javafx.scene.shape.Rectangle {
 		}
 		
 		translateXProperty().bind(ConnectionPointX);
-		translateYProperty().bind(ConnectionPointY);		
-		
-		setOnMouseClicked(connectionPointOnMousePressedEventHandler);
-		setOnMouseDragged(connectionPointOnMouseDraggedEventHandler);
+		translateYProperty().bind(ConnectionPointY);			
 		
 		getStyleClass().add("connectionBox");
 		
 	}	
 	
-	EventHandler<MouseEvent> connectionPointOnMousePressedEventHandler = new EventHandler<MouseEvent>() {
-
-		@Override
-		public void handle(MouseEvent t) {
-			System.out.println("Pressed");			
-		}
-	};
 	
-	EventHandler<MouseEvent> connectionPointOnMouseDraggedEventHandler = new EventHandler<MouseEvent>() {
-
-		@Override
-		public void handle(MouseEvent t) {
-			System.out.println("Dragged");
-		}
-	};
 
 	public String getPosition() {
 		return position;

@@ -17,9 +17,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.VBox;
 
+/*
+ * Basisklasse für Klassen und Interfaces
+ */
+
 public abstract class Entity extends javafx.scene.Group implements SelectableNode {
 	protected BooleanProperty isAbstractProperty = new SimpleBooleanProperty();	
-	
+
 	protected VBox umlEntityBox = new VBox();	
 	
 	protected Label entityNameLabel = new Label();
@@ -118,6 +122,11 @@ public abstract class Entity extends javafx.scene.Group implements SelectableNod
 	}		
 	
 	
+	/**
+	 * Erstellt eine UML-Entity-Node mit entityName
+	 * @param entityName Name der Klasse/Interfaces
+	 * @return
+	 */
 	private Node createUmlNode(String entityName) {				
 		umlEntityBox.setAlignment(Pos.CENTER);
 		

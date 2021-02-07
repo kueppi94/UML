@@ -20,10 +20,10 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
-
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -292,7 +292,21 @@ public class MainController {
 	public void test() {
 		
 		CodeLoaderJava n = new CodeLoaderJava(Content, "C://Users//Küppi//Desktop//Test_java_jetzt", ".java");
-		n.getClassFromCode();
+		List<UMLClass> classes = n.getAllClasses();
+		List<UMLInterface> interfaces = n.getAllInterfaces();
+		
+		
+		Content.getChildren().clear();
+		
+		for(UMLClass c : classes)
+			Content.getChildren().add(c);
+		
+		for(UMLInterface i : interfaces)
+			Content.getChildren().add(i);
+		
+		
+		
+		
 				
 		
 		/*

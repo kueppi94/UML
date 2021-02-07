@@ -29,14 +29,38 @@ public abstract class CodeGenerator {
 		this.ext = ext;
 	}
 	
+	/**
+	 * Ermittelt den Quellcode für eine Eigenschaft und gibt diesen zurück
+	 * @param property Eigenschaft, für den der Quellcode erstellt werden soll.
+	 * @return Erstellter Quellcode für die Eigenschaft
+	 */
 	public abstract String getPropertyCode(Property property);
 	
+	/**
+	 * Ermittelt den Quellcode für einen Parameter einer Methode.
+	 * @param parameter Der Parameter, für den der Quellcode erstellt werden soll.
+	 * @param separator Trennzeichen zwischen Parametern - üblicherweise ein Komma
+	 * @return
+	 */
 	public abstract String getParameterCode(Parameter parameter, String separator);
 	
+	/**
+	 * Ermittelt den Quellcode für eine Methode.
+	 * @param method Methode, für den der Quellcode erstellt werden soll
+	 * @return Erstellter Quellcode für die Methode
+	 */
 	public abstract String getMethodCode(model.Method method);
 	
+	/**
+	 * Ermittelt den gesamten Quellcode für eine Entity (Interface oder Klasse)
+	 * @param umlEntity Entität, für die der Quellcode erstellt werden soll
+	 * @return Erstellter Quellcode für die Entität
+	 */
 	public abstract String getEntityCode(Entity umlEntity);
 	
+	/**
+	 * 	Schreibt den Quellcode der Klasse oder des Interfaces in eine entsprechende Datei 
+	 */
 	public void saveAllClasses() throws FileNotFoundException {
 		ObservableList<Node> nodes = canvas.getChildren();
 		
@@ -55,5 +79,5 @@ public abstract class CodeGenerator {
 			out.close();
 			
 		}		
-	}
+	}	
 }

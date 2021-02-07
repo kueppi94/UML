@@ -10,6 +10,10 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polygon;
 import javafx.scene.shape.Rectangle;
 
+/*
+ * Erstellt eine Vererbung zwischen zwei Klassen
+ */
+
 public class UMLInheritanceHandler extends ConnectionLine {	
 	public UMLInheritanceHandler(UMLClass superclass, UMLClass subclass) {
 		super(subclass, superclass);

@@ -7,6 +7,10 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 
+/*
+ * Eine Klasse, welche das UML-Klassendiagramm in gültigen Java-Code exportiert
+ */
+
 public class CodeGeneratorJava extends CodeGenerator {
 	
 	public CodeGeneratorJava(AnchorPane canvas, String outputDir, String ext) {

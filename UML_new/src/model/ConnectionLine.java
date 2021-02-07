@@ -17,6 +17,10 @@ import javafx.scene.shape.Path;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.VLineTo;
 
+/*
+ * Basisklasse für Verbindungen zwischen Entitäten
+ */
+
 public class ConnectionLine extends javafx.scene.Group {
 	protected Entity start; 
 	protected Entity end;
@@ -24,19 +28,27 @@ public class ConnectionLine extends javafx.scene.Group {
 	private ConnectionBox startBox;
 	private ConnectionBox endBox;
 	
+	//Pfad zwischen Start und Endpunkt
 	private Path path = new Path();
 	private MoveTo startpoint = new MoveTo();
 	private HLineTo hLine = new HLineTo();	
 	private VLineTo vLine = new VLineTo();
 	
+	//Kreis zum Verschieben der Verbindungslinien in horizontaler und vertikaler Richtung
 	private Circle positionChanger = new Circle(15);
 	
-	
+	//Begrenzungspunkte für den "positionChanger"
 	private SimpleDoubleProperty minXProperty = new SimpleDoubleProperty();
 	private SimpleDoubleProperty maxXProperty = new SimpleDoubleProperty();
 	private SimpleDoubleProperty minYProperty = new SimpleDoubleProperty();
 	private SimpleDoubleProperty maxYProperty = new SimpleDoubleProperty();
 	
+	
+	/**
+	 * Erstellt eine Verbindungslinie zwischen Start und Endpunkt
+	 * @param start Startpunkt der Verbindung
+	 * @param end Endpunkt der Verbindung
+	 */
 	public ConnectionLine(Entity start, Entity end) {		
 		if(start == null || end == null)
 			return;

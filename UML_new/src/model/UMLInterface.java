@@ -3,6 +3,11 @@ package model;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 
+/*
+ * Nahezu ähnlich der UMLClass
+ * Einziger Unterschied ist, dass Objekte der UMLInterface-Klasse immer abstrakt sind und die Methoden ebenfalls immer public & abstract
+ */
+
 public class UMLInterface extends Entity {
 	
 	private static final int INTERFACE_ID = 0;	

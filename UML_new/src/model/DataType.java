@@ -3,6 +3,11 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+/*
+ * Beinhaltet die gängigen Datentypen.
+ * Speichert zudem den Standardwert der verschiedenen Datentypen (wichtig für das Erstellen von Methoden mit einem Rückgabewert) * 
+ */
+
 public enum DataType { 
 	BYTE("byte", "0", "byte"), SHORT("short", "0", "short"), INT("int", "0", "int"), 
 	LONG("long", "0L", "long"), FLOAT("float", "0.0f", "float"), DOUBLE("double", "0.0d", "double"), 
