@@ -27,6 +27,9 @@ public class CodeLoaderJava extends CodeLoader {
 		code = code.trim();
 		
 		String classSignature = code.substring(0, code.indexOf("{"));
+		//imports und package Befehle ausschneiden
+		classSignature = classSignature.substring(classSignature.lastIndexOf(";") + 1, classSignature.length());
+		
 		String[] classSignatureArray = classSignature.trim().split("\\s+");
 		
 		ArrayList<String> classSignatureList = new ArrayList<String>(Arrays.asList(classSignatureArray));
@@ -41,11 +44,13 @@ public class CodeLoaderJava extends CodeLoader {
 		String superclass = null;
 		
 		if(classSignatureList.contains("extends"))
-			superclass = classSignatureList.get(4);		
+			superclass = classSignatureList.get(4).trim();		
 		
 		
 		UMLClass umlClass = new UMLClass(className);
-		umlClass.setVisibility(v);		
+		umlClass.setVisibility(v);	
+		
+		umlClass.setSuperclassHelper(superclass);
 		
 		List<Method> list = getMethodsFromCode(code);		
 		
@@ -71,13 +76,15 @@ public class CodeLoaderJava extends CodeLoader {
 		
 		for(String s : entityContentArray)
 		{
+			//Daten aufbereiten
+			s = s.trim();
+			
 			//Überspringe Methoden
 			if(s.contains("("))
 				continue;
 			
 			
-			String[] help = s.split(" ");		
-			
+			String[] help = s.split(" ");				
 			
 			Visibility v;
 			DataType datatype;
@@ -144,8 +151,6 @@ public class CodeLoaderJava extends CodeLoader {
 				if(para.length < 2)
 					continue;
 				
-				//System.out.println(para[0]);
-				//System.out.println(para[1]);
 				
 				Parameter p = new Parameter(para[1], DataType.valueOf(para[0].toUpperCase()));			
 				
@@ -165,16 +170,19 @@ public class CodeLoaderJava extends CodeLoader {
 		code = code.trim();
 		
 		String interfaceSignature = code.substring(0, code.indexOf("{"));
+		//imports und package Befehle ausschneiden
+		interfaceSignature = interfaceSignature.substring(interfaceSignature.lastIndexOf(";") + 1, interfaceSignature.length());	
+		
 		String[] interfaceSignatureArray = interfaceSignature.trim().split("\\s+");
 		
 		ArrayList<String> interfaceSignatureList = new ArrayList<String>(Arrays.asList(interfaceSignatureArray));
 		
 		
-		//Interface hat keine Sichtbarkeit
-		if(interfaceSignatureList.get(0).equals("class"))
+		//Interface hat keine Sichtbarkeit im Quelltext -> Dummy-Wert einfügen
+		if(interfaceSignatureList.get(0).equals("interface"))
 			interfaceSignatureList.add(0, null);			
 		
-		String interfaceName = interfaceSignatureList.get(2);	
+		String interfaceName = interfaceSignatureList.get(2);			
 		
 		UMLInterface umlInterface = new UMLInterface(interfaceName);			
 		
@@ -182,6 +190,11 @@ public class CodeLoaderJava extends CodeLoader {
 		
 		for(Method m : list)
 			umlInterface.addMethod(m);
+		
+		List<Property> propList = getPropertiesFromCode(code);
+		
+		for(Property p : propList)
+			umlInterface.addProperty(p);
 		
 		return umlInterface;
 		

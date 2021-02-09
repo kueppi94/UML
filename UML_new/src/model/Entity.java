@@ -125,7 +125,7 @@ public abstract class Entity extends javafx.scene.Group implements SelectableNod
 	/**
 	 * Erstellt eine UML-Entity-Node mit entityName
 	 * @param entityName Name der Klasse/Interfaces
-	 * @return
+	 * @return Die erstellte Node für die Klasse bzw. das Interface
 	 */
 	private Node createUmlNode(String entityName) {				
 		umlEntityBox.setAlignment(Pos.CENTER);

@@ -51,13 +51,16 @@ public class UMLClass extends Entity {
 
 	private ObjectProperty<UMLClass> superclassProperty = new SimpleObjectProperty<UMLClass>();
 	
+	//wird ausschließlich für das Laden von Dateien aus Quelltext benötigt.
+	//Speichert zwischenzeitlich den Namen der Superklasse.
+	private String superclassHelper;
 
 	public UMLClass(String className) {
-		super(className);			
+		super(className);				
 	}	
 	
 	public void setVisibility(Visibility visibility) {
-		this.visibility = visibility;
+		this.visibility = visibility;		
 	}
 	
 	public void setAbstract(boolean isAbstract) {
@@ -91,7 +94,8 @@ public class UMLClass extends Entity {
 	}
 
 	public void setSuperclass(UMLClass superclass) {
-		this.superclassProperty.set(superclass);			
+		this.superclassProperty.set(superclass);	
+		superclassHelper = superclass.entityNameProperty().get();
 	}
 	
 	public ObjectProperty<UMLInheritanceHandler> getInheritanceProperty() {
@@ -99,7 +103,15 @@ public class UMLClass extends Entity {
 	}
 	
 	public UMLInheritanceHandler getInheritance() {
-		return inheritanceProperty.get();
+		return inheritanceProperty.get();	
+	}
+	
+	public String getSuperclassHelper() {
+		return superclassHelper;
+	}
+	
+	public void setSuperclassHelper(String classString) {
+		superclassHelper = classString;
 	}
 	
 	/**

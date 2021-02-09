@@ -89,6 +89,9 @@ public class ConnectionLine extends javafx.scene.Group {
 		end.setOnMousePressed(entityOnMousePressedEventHandler);
 		end.setOnMouseDragged(entityOnMouseDraggedEventHandler);		
 		
+		//Set Styles
+		positionChanger.getStyleClass().add(Style.POSITIONCHANGER.css());
+		
 		getChildren().addAll(path, positionChanger);			
 	}	
 	

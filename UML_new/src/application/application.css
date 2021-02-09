@@ -21,7 +21,12 @@
 	 -fx-opacity: 0;
 }
 
-.connectionBox:hover {
+.positionChanger {
+	-fx-opacity: 0;
+	-fx-fill: RED;
+}
+
+.positionChanger:hover {
 	-fx-opacity: 1;
 }
 

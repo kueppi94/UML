@@ -49,6 +49,10 @@ import model.UMLClass;
 import model.UMLInheritanceHandler;
 import model.Visibility;
 
+/*
+ * Diese Klasse kümmert sich um die einzelnen Events des Klassen-Inspektors
+ */
+
 public class ClassInspectorController implements Initializable {
 	@FXML
 	private VBox ClassInspector;	
@@ -159,7 +163,9 @@ public class ClassInspectorController implements Initializable {
 	
 	
 	
-	
+	/**
+	 * Erstellt eine neue Eigenschaft für die Klasse. Das UML-Node wird automatisch aktualisiert.
+	 */
 	public void newPropertyButtonAction() {
 		NewProperty.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
@@ -172,6 +178,9 @@ public class ClassInspectorController implements Initializable {
 		});
 	}
 	
+	/**
+	 * Erstellt eine neue Methode für die Klasse. Das UML-Node wird automatisch aktualisiert.
+	 */
 	public void newMethodButtonAction() {
 		NewMethod.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
@@ -182,7 +191,7 @@ public class ClassInspectorController implements Initializable {
 		        addNewMethodInspector(m);
 		    }
 		});
-	}
+	}	
 	
 	public HBox getNewParameterInspector(ListProperty<Parameter> parametersProperty, Parameter p) {
 		

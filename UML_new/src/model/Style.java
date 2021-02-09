@@ -6,7 +6,8 @@ package model;
  */
 
 public enum Style {
-	UML_ENTITY("umlEntity"), UML_ENTITY_NAME("umlEntityName"), ITALIC("italic"), CONNECTIONLINE("connectionLine"), H_BOX("h-box");
+	UML_ENTITY("umlEntity"), UML_ENTITY_NAME("umlEntityName"), ITALIC("italic"), CONNECTIONLINE("connectionLine"), H_BOX("h-box"),
+	POSITIONCHANGER("positionChanger");
 	
 	private final String cssValue;
 	
