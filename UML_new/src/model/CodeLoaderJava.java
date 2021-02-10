@@ -129,7 +129,6 @@ public class CodeLoaderJava extends CodeLoader {
 			if(!s.contains("("))
 				continue;	
 			
-			//System.out.println(s);
 						
 			String[] help = s.split(" ");
 						
@@ -142,8 +141,7 @@ public class CodeLoaderJava extends CodeLoader {
 			Method m = new Method(v, isAbstract, "name", DataType.BOOLEAN);			
 			
 			
-			for(int i = 0; i < paras.length; i++)	{				
-				System.out.println(paras[i]);
+			for(int i = 0; i < paras.length; i++)	{					
 				paras[i] = paras[i].strip();
 				String[] para = paras[i].split(" ");
 				

@@ -201,14 +201,12 @@ public class InterfaceInspectorController implements Initializable {
 		Button deleteProp = new Button("-");
 		deleteProp.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	propertiesProperty.remove(propertiesProperty.indexOf(p));
+		    	propertiesProperty.remove(propertiesProperty.indexOf(p));		        
 		        
-		        //geht besser über binding für hinzufügen/löschen?!
 		        HBox container = (HBox)deleteProp.getParent();
 		        VBox help = (VBox)container.getParent();
 		        
-		        help.getChildren().remove(container);
-		        //
+		        help.getChildren().remove(container);		       
 		    }
 		});
 		

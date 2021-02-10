@@ -197,9 +197,7 @@ public class Method extends javafx.scene.Group {
 						parameterBox.getChildren().add(new Label(", "));						
 				}	
 				
-				for(int i = 0; i < p.getRemovedSize(); i++) {
-					System.out.println(p.getFrom());
-					
+				for(int i = 0; i < p.getRemovedSize(); i++) {				
 					parameterBox.getChildren().remove(p.getFrom());
 					
 					//Löschen des Komma-Labels

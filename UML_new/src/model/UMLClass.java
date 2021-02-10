@@ -94,8 +94,9 @@ public class UMLClass extends Entity {
 	}
 
 	public void setSuperclass(UMLClass superclass) {
-		this.superclassProperty.set(superclass);	
-		superclassHelper = superclass.entityNameProperty().get();
+		this.superclassProperty.set(superclass);
+		if(superclass != null)
+			superclassHelper = superclass.entityNameProperty().get();
 	}
 	
 	public ObjectProperty<UMLInheritanceHandler> getInheritanceProperty() {

@@ -95,6 +95,7 @@ public class MainController {
 		 buttonCreationHelper(NewInheritanceButton, "/images/Inheritance.png");
 		
 		
+		 //Aktion zum Hinzufügen von neuen UML-Klassen
 		NewUMLClassButton.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	String name = textInputDialogHelper();
@@ -110,6 +111,7 @@ public class MainController {
 		});
 		
 		
+		//Aktion zum Hinzufügen von neuen UML-Interfaces
 		NewUMLInterfaceButton.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	String name = textInputDialogHelper();	
@@ -124,6 +126,7 @@ public class MainController {
 		});
 		
 		
+		//Aktion zum Hinzufügen einer neuen Vererbung
 		NewInheritanceButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override public void handle(ActionEvent e) {
 				Optional<Pair<UMLClass, UMLClass>> userInput =  showInheritanceDialog();			
@@ -143,13 +146,14 @@ public class MainController {
 		});
 		
 		
-		
+		//Lädt ein UML-Diagramm aus bestehendem Java-Code
 		loadJavaProject.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	loadFromJavaProject();
 		    }
 		});
 		
+		//Speichert ein UML-Diagramm als Java-Projekt
 		saveAsJavaProject.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	try {
@@ -187,10 +191,7 @@ public class MainController {
 		alert.setHeaderText(null);
 		alert.setContentText("Das UML-Diagramm wurde erfolgreich als Java-Projekt exportiert.");
 
-		alert.showAndWait();
-		
-		
-		//System.out.println(selectedDirectory);
+		alert.showAndWait();		
 	}
 	
 	
@@ -261,6 +262,10 @@ public class MainController {
     	return null;    	
 	}
 	
+	/**
+	 * Dialog für das Erstellen von Vererbungen
+	 * @return Gibt ein Pair<Superclass, Subclass> zurück
+	 */
 	private Optional<Pair<UMLClass, UMLClass>> showInheritanceDialog() {
 		// TODO Auto-generated method stub
 		// Create the custom dialog.

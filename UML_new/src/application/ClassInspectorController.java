@@ -86,6 +86,11 @@ public class ClassInspectorController implements Initializable {
 	@FXML
 	private Button NewMethod;
 	
+	
+	/**
+	 * Initialisiert die Auswahlbox für die Superklasse 
+	 * @param content Zeichenfläche mit den UML-Nodes
+	 */
 	public void initData(AnchorPane content) {
 		this.Content = content;
 		
@@ -130,6 +135,10 @@ public class ClassInspectorController implements Initializable {
 		}
 	}
 	 
+	/**
+	 * Definiert die Aktionen bei Button-Clicks
+	 * Generiert außerdem Eigenschaft-Inspektoren für Eigenschaften und Methoden
+	 */
 	public void initialize(URL location, ResourceBundle resources) {		
 		newPropertyButtonAction();	
 		newMethodButtonAction();
@@ -193,6 +202,9 @@ public class ClassInspectorController implements Initializable {
 		});
 	}	
 	
+	/**
+	 * Erstellt einen Eigenschaften-Inspektor für einen Methodenparameter	 
+	 */
 	public HBox getNewParameterInspector(ListProperty<Parameter> parametersProperty, Parameter p) {
 		
 		HBox paraContainer = new HBox();	 
@@ -232,6 +244,9 @@ public class ClassInspectorController implements Initializable {
 	}
 	
 	
+	/**
+	 * Erstellt einen Eigenschaften-Inspektor für Eigenschaften einer Klasse	 
+	 */
 	public void addNewPropertyInspector(Property p) {
 		HBox container = new HBox();	    		
 		
@@ -265,14 +280,12 @@ public class ClassInspectorController implements Initializable {
 		Button deleteProp = new Button("-");
 		deleteProp.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
-		    	propertiesProperty.remove(propertiesProperty.indexOf(p));
+		    	propertiesProperty.remove(propertiesProperty.indexOf(p));		        
 		        
-		        //geht besser über binding für hinzufügen/löschen?!
 		        HBox container = (HBox)deleteProp.getParent();
 		        VBox help = (VBox)container.getParent();
 		        
-		        help.getChildren().remove(container);
-		        //
+		        help.getChildren().remove(container);		        
 		    }
 		});
 		
@@ -283,6 +296,9 @@ public class ClassInspectorController implements Initializable {
 		PropertyBox.getChildren().add(container);	   
 	}
 	
+	/**
+	 * Erstellt einen neuen Eigenschaften-Inspektor für die übergebene Methode	 
+	 */
 	public void addNewMethodInspector(Method m) {
 		CheckBox isAbstractMethod = new CheckBox("Abstrakt?");
 		isAbstractMethod.selectedProperty().bindBidirectional(m.abstractProperty());	    			
